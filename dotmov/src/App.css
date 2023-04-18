@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+
+/* Navbar CSS */
+.searchbarCSS {
+  border-radius: 30px !important;
+  width: 310px !important;
+}
+
+/* LOGIN CSS*/
+.box {
+  border: 1px solid #38CDD7;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  width: 40%;
+  margin: auto;
+  margin-top: 250px;
+  margin-bottom: 40px;
+  border-radius: 5%;
+  z-index: 2 !important;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  /* opacity: 0.4; */
+  z-index: 1 !important;
+}
+
+.g-btn{
+  align-content: center !important;
+}
+.g-btn > div,
+.g-btn > div > svg {
+ background: none !important;
+}
