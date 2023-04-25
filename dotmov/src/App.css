@@ -12,6 +12,14 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+a {
+  text-decoration: none;
+  color: #38CDD7;
+}
+
+a:active {
+  color: #FFFFFF;
+}
 
 .App-header {
   background-color: #282c34;
@@ -49,9 +57,11 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   background-color: rgba(0, 0, 0, 0.7);
   text-align: center;
-  width: 40%;
+  width: 30%;
   margin: auto;
   margin-top: 250px;
+  padding-left: 50px !important;
+  padding-right: 50px !important;
   margin-bottom: 40px;
   border-radius: 5%;
   z-index: 2 !important;
@@ -68,10 +78,29 @@
   z-index: 1 !important;
 }
 
-.g-btn{
-  align-content: center !important;
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+  
 }
+
 .g-btn > div,
 .g-btn > div > svg {
  background: none !important;
+}
+
+.fields{
+  margin-top: 30px !important;
+}
+
+.login-btn{
+  background-color: #38CDD7 !important;
+  border: #38CDD7;
+  width:50%;
+  margin-top: 20px;
 }

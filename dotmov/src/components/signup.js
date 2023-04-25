@@ -24,35 +24,65 @@ const Signup = () => {
 
   return (
     <>
-      <div className="p-4 box">
-        <h2 className="mb-3">Register Today</h2>
+      <div className="background-image" style={{backgroundImage: "url(https://wallpaperaccess.com/full/1512223.jpg)", 
+        zIndex: "1",}}>
+      <div className="overlay"> </div>
+      <div className="p-4 box flex-column align-items-center text-center">
+        <h2 className="mb-3" style={{color:"white"}}>Register Today</h2>
         {error && <Alert variant="danger">{error}</Alert>}
+        
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+
+        <Form.Group className="mb-3 mt-3 fields" controlId="formBasicName">
             <Form.Control
-              type="email"
-              placeholder="Email address"
-              onChange={(e) => setEmail(e.target.value)}
+              type="name"
+              placeholder="FULL NAME"
+              // onChange={(e) => setPassword(e.target.value)}
+              style={{borderRadius: "35px", height: "40px", paddingLeft: "15px", fontSize: "13px"}}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+
+          <Form.Group className="mb-3 mt-3 fields" controlId="formBasicEmail">
+            <Form.Control
+              type="email"
+              placeholder="EMAIL ADDRESS"
+              onChange={(e) => setEmail(e.target.value)}
+              style={{borderRadius: "35px", height: "40px", paddingLeft: "15px", fontSize: "13px"}}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3 mt-3 fields" controlId="formBasicPassword">
             <Form.Control
               type="password"
-              placeholder="Password"
+              placeholder="PASSWORD"
               onChange={(e) => setPassword(e.target.value)}
+              style={{borderRadius: "35px", height: "40px", paddingLeft: "15px", fontSize: "13px"}}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3 mt-3 fields" controlId="formBasicPassword">
+            <Form.Control
+              type="password"
+              placeholder="CONFIRM PASSWORD"
+              onChange={(e) => setPassword(e.target.value)}
+              style={{borderRadius: "35px", height: "40px", paddingLeft: "15px", fontSize: "13px"}}
             />
           </Form.Group>
 
           <div className="d-grid gap-2">
-            <Button variant="primary" type="Submit">
-              Sign up
+            <Button className=" login-btn" variant="primary" type="Submit" 
+            style= {{height: "45px", borderRadius: "35px", fontWeight: "700", width:"auto"}}>
+              SIGN UP
             </Button>
           </div>
         </Form>
+
+        <div className="p-4 mt-3 text-center" style= {{color:"white"}}>
+        Already have an account? <Link to="/login">  LOGIN</Link>
       </div>
-      <div className="p-4 box mt-3 text-center">
-        Already have an account? <Link to="/">Log In</Link>
+
+      </div>
       </div>
     </>
   );
