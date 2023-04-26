@@ -39,15 +39,15 @@ app.post('/AddFavorite', async (req, res) => {
   try {
     const userID = req.body.userID;
     const movieID = req.body.movieID;
-    const user = await collection.findOne({ _id: ObjectID(userID) });
+    const user = await collection.findOne({ 'user._id': userID });
     if (!user) {
       throw new Error('User not found');
     }
-    const favorites = user.favorites || [];
-    favorites.push(movieID);
+    const favoriteMovies = user.favoriteMovies || [];
+    favoriteMovies.push(movieID);
     await collection.updateOne(
-      { _id: ObjectID(userID) },
-      { $set: { favorites } }
+      { 'user._id': userID },
+      { $set: { favoriteMovies } }
     );
     res.json({ message: 'Favorite movie added successfully' });
   } catch (error) {
