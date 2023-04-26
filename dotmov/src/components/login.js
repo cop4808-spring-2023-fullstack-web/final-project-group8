@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import axios from "axios";
 import GoogleButton from "react-google-button";
 import { useUserAuth } from "../context/UserAuthContext";
-
+import { auth } from '../configs/firebase.js'
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,11 +13,30 @@ const Login = () => {
   const { logIn, googleSignIn } = useUserAuth();
   const navigate = useNavigate();
 
+  const createUser = async (user, favoriteMovies = []) => {
+    try {
+      const userID = auth.currentUser.uid;
+      user._id = userID;
+      const response = await axios.post('http://localhost:5678/AddUser', {
+        user,
+        favoriteMovies,
+      });
+      if (response.status !== 200) {
+        throw new Error('Failed to create user');
+      }
+      const result = response.data;
+      console.log(`Created user with ID ${result.UserID}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
       await logIn(email, password);
+      await createUser({ email });  //Move to SignUP
       navigate("/home");
     } catch (err) {
       setError(err.message);
