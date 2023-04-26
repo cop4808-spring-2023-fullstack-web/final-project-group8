@@ -20,14 +20,19 @@ const Footer = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-6 text-center text-lg-start mb-3 mb-lg-0">
-              <a href="/">dotMOV</a>
+              <a href="/">
+                <h5>dotMOV</h5>
+              </a>
             </div>
             <div className="col-lg-6 text-center text-lg-end">
               <a href="/" className="text-white mb-0 py-2">
                 All Movies
               </a>
               <span className="mb-0 py-2 px-3" style={{ borderRight: "none" }}>
-                <a href="/" className="text-white mb-0 py-2">
+                <a
+                  href="https://github.com/cop4808-spring-2023-fullstack-web/final-project-group8"
+                  className="text-white mb-0 py-2"
+                >
                   Github
                 </a>
               </span>
