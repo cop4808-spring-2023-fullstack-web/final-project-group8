@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const router = express.Router()
 const corsOptions ={
   origin:'http://localhost:3000',
   credentials:true,
@@ -23,19 +24,39 @@ const collection = database.collection(config.db.collection)
 
 var http = require("https");
 
-// Manual Insert of a Favorite Movie
-const newFavorite = {
-  user_id:1234,
-  movie_id:12345,
-  title: "The Godfather",
-  release_date: "1972-03-14",
-  poster_path: "/rPdtLWNsZmAtoZl9PK7S2wE3qiS.jpg"
-};
-collection.insertOne(newFavorite, function(err,res){
-  if (err) throw err;
-    console.log("1 Movie inserted");
-    client.close();
-})
+app.post('/AddUser', async (req, res) => {
+  try{
+    const newUser = req.body;
+    const result = await collection.insertOne(newUser);
+    res.json({ UserID: result.insertedId });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to Create User' });
+  }
+});
+
+app.post('/AddFavorite', async (req, res) => {
+  try {
+    const userID = req.body.userID;
+    const movieID = req.body.movieID;
+    const user = await collection.findOne({ 'user.UID': userID });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const favoriteMovies = user.favoriteMovies || [];
+    favoriteMovies.push(movieID);
+    await collection.updateOne(
+      { 'user.UID': userID },
+      { $set: { favoriteMovies } }
+    );
+    res.json({ message: 'Favorite movie added successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to add favorite movie' });
+  }
+});
+
+
   
 app.listen(5678); //start the server
 console.log('Server is running...');

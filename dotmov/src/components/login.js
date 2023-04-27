@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import axios from "axios";
 import GoogleButton from "react-google-button";
 import { useUserAuth } from "../context/UserAuthContext";
+import { auth } from '../configs/firebase.js'
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -37,17 +39,8 @@ const Login = () => {
     <>
     <div className="background-image" style={{backgroundImage: "url(https://wallpaperaccess.com/full/1512223.jpg)", 
         zIndex: "1",}}>
-      <div className="overlay" style={{
-          position: "absolute",
-          top: "0",
-          left: "0",
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.4)",
-          zIndex: "-1",
-        }}>
-        </div>
-      <div className="p-4 box">
+      <div className="overlay"> </div>
+      <div className="p-4 box flex-column align-items-center text-center">
         <h2 className="mb-3" style={{color:"white"}}>Welcome!</h2>
         {error && <Alert variant="danger">{error}</Alert>}
 
@@ -61,25 +54,30 @@ const Login = () => {
 </div>
 
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3 mt-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3 mt-3 fields" controlId="formBasicEmail">
             <Form.Control
               type="email"
-              placeholder="Email address"
+              placeholder="EMAIL ADDRESS"
               onChange={(e) => setEmail(e.target.value)}
+              style={{borderRadius: "35px", height: "40px", paddingLeft: "15px", fontSize: "13px"}}
+
             />
           </Form.Group>
 
-          <Form.Group className="mb-3 mt-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3 mt-3 fields" controlId="formBasicPassword">
             <Form.Control
               type="password"
-              placeholder="Password"
+              placeholder="PASSWORD"
               onChange={(e) => setPassword(e.target.value)}
+              style={{ borderRadius: "35px", height: "40px", paddingLeft: "15px", fontSize: "13px", maxWidth:"400px"}}
+
             />
           </Form.Group>
 
           <div className="d-grid gap-2">
-            <Button variant="primary" type="Submit">
-              Log In
+            <Button className="login-btn" type="Submit" 
+              style= {{height: "45px", borderRadius: "35px", fontWeight: "700", width:"auto"}}>
+              LOGIN
             </Button>
           </div>
         </Form>
