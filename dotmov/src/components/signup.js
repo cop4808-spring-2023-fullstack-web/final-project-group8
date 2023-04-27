@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { useUserAuth } from "../context/UserAuthContext";
+import { useAuth } from "../context/UserAuthContext";
 import axios from "axios";
 import { auth } from '../configs/firebase.js'
 
@@ -30,7 +30,7 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setName] = useState("");
-  const { signUp } = useUserAuth();
+  const { signUp } = useAuth();
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {

@@ -1,21 +1,26 @@
 import { useState, useEffect } from "react";
 import { Navbar, Nav, Container, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UserAuthContext";
 import "../App.css";
 
-function NavigationBar() {
-  const { logout } = useAuth();
-  const [currentUser, setCurrentUser] = useState(null);
+function NavigationBar({ user }) {
+  const { currentUser, logOut } = useAuth();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    setCurrentUser(useAuth.currentUser);
-  }, []);
-
-  function handleLogout() {
-    logout();
-    setCurrentUser(null);
-  }
+  const handleLogout = async () => {
+    try {
+      let loggedOut = await logOut();
+      if (loggedOut === true) {
+        console.log("LOGGING OUT");
+        navigate("/");
+      } else {
+        throw loggedOut;
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <Navbar bg="dark" expand="lg" style={{ zIndex: 2 }}>
@@ -47,7 +52,7 @@ function NavigationBar() {
               TV Shows
             </Nav.Link>
 
-            {currentUser ? (
+            {user ? (
               <Button
                 variant="outline-light"
                 className="ms-2"
@@ -69,4 +74,8 @@ function NavigationBar() {
   );
 }
 
-export default NavigationBar;
+export default function NavigationBarWrapper() {
+  const { user } = useAuth();
+
+  return <NavigationBar user={user} />;
+}
