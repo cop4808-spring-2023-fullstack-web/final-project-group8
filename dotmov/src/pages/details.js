@@ -99,7 +99,6 @@ function Details() {
                 />
                 <div className="description">
                   <div className="title">{title}</div>
-                  <br />
                   <div className="overview">{overview}</div>
                   <br />
                   <div className="votes">{votes}/10</div>
