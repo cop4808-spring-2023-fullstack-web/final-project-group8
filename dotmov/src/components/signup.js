@@ -37,7 +37,7 @@ const Signup = () => {
     e.preventDefault();
     setError("");
     try {
-      await signUp(email, password);
+      await signUp(fullName, email, password);
       await createUser({ email });  //Move to SignUP
       navigate("/");
     } catch (err) {
@@ -84,7 +84,7 @@ const Signup = () => {
             />
           </Form.Group>
 
-          <Form.Group className="mb-3 mt-3 fields" controlId="formBasicPassword">
+          <Form.Group className="mb-3 mt-3 fields" controlId="formBasicConfirmPassword">
             <Form.Control
               type="password"
               placeholder="CONFIRM PASSWORD"

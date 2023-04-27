@@ -24,6 +24,8 @@ const MovieContainer = ({title, poster_path,vote_average, release_date, overview
             <div className="card-body">
                 <img className= "card-img-top" src={API_IMG+poster_path} />
                 <div className="card-body">
+                <h5 className="card-title">{title}</h5>
+                <p className="card-text">Rating: {vote_average}</p>
                     <button type="button" className="btn btn-dark" id={id} onClick={sendFavorite}> Add to favorites </button>
                 </div>
             </div>
@@ -32,4 +34,3 @@ const MovieContainer = ({title, poster_path,vote_average, release_date, overview
 }
 
 export default MovieContainer;
-  

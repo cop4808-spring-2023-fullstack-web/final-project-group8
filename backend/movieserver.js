@@ -56,8 +56,29 @@ app.post('/AddFavorite', async (req, res) => {
     res.status(500).json({ error: 'Failed to add favorite movie' });
   }
 });
-
-
+  // Create a new user in MongoDB
+  app.post('/Users', async (req, res) => {
+    try {
+      const { fullName, email, password } = req.body;
   
+      // Connect to MongoDB
+      const client = await MongoClient.connect(uri);
+      const db = client.db(dbName);
+  
+      // Insert the new user into the "users" collection
+      const result = await db.collection('Users').insertOne({
+        fullName,
+        email,
+        password
+      });
+  
+      // Send a success response with the new user's ID
+      res.status(201).json({ id: result.insertedId });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
 app.listen(5678); //start the server
 console.log('Server is running...');

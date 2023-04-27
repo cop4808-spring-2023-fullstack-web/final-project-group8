@@ -12,7 +12,6 @@ function NavigationBar({ user }) {
     try {
       let loggedOut = await logOut();
       if (loggedOut === true) {
-        console.log("LOGGING OUT");
         navigate("/");
       } else {
         throw loggedOut;
@@ -51,7 +50,6 @@ function NavigationBar({ user }) {
             <Nav.Link href="#action2" style={{ color: "#FFFFFF" }}>
               TV Shows
             </Nav.Link>
-
             {user ? (
               <Button
                 variant="outline-light"
