@@ -24,7 +24,7 @@ function NavigationBar({ user }) {
   return (
     <Navbar bg="dark" expand="lg" style={{ zIndex: 2 }}>
       <Container fluid>
-        <Navbar.Brand href="#" style={{ color: "#38CDD7" }}>
+        <Navbar.Brand href="/" style={{ color: "#38CDD7" }}>
           dotMOV
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
