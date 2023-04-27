@@ -3,6 +3,27 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useUserAuth } from "../context/UserAuthContext";
+import axios from "axios";
+import { auth } from '../configs/firebase.js'
+
+const createUser = async (user, favoriteMovies = []) => {
+  try {
+    const userID = auth.currentUser.uid;
+    user.firebaseUID = userID;
+    const response = await axios.post('http://localhost:5678/AddUser', {
+      user,
+      favoriteMovies,
+    });
+    if (response.status !== 200) {
+      throw new Error('Failed to create user');
+    }
+    const result = response.data;
+    console.log(`Created user with ID ${result.UserID}`);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +37,7 @@ const Signup = () => {
     setError("");
     try {
       await signUp(email, password);
+      await createUser({ email });  //Move to SignUP
       navigate("/");
     } catch (err) {
       setError(err.message);
