@@ -40,14 +40,14 @@ app.post('/AddFavorite', async (req, res) => {
   try {
     const userID = req.body.userID;
     const movieID = req.body.movieID;
-    const user = await collection.findOne({ 'user.UID': userID });
+    const user = await collection.findOne({ 'user.firebaseUID': userID });
     if (!user) {
       throw new Error('User not found');
     }
     const favoriteMovies = user.favoriteMovies || [];
     favoriteMovies.push(movieID);
     await collection.updateOne(
-      { 'user.UID': userID },
+      { 'user.firebaseUID': userID },
       { $set: { favoriteMovies } }
     );
     res.json({ message: 'Favorite movie added successfully' });

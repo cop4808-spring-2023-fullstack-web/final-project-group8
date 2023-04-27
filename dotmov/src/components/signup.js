@@ -6,25 +6,6 @@ import { useAuth } from "../context/UserAuthContext";
 import axios from "axios";
 import { auth } from '../configs/firebase.js'
 
-const createUser = async (user, favoriteMovies = []) => {
-  try {
-    const userID = auth.currentUser.uid;
-    user.firebaseUID = userID;
-    const response = await axios.post('http://localhost:5678/AddUser', {
-      user,
-      favoriteMovies,
-    });
-    if (response.status !== 200) {
-      throw new Error('Failed to create user');
-    }
-    const result = response.data;
-    console.log(`Created user with ID ${result.UserID}`);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -37,14 +18,12 @@ const Signup = () => {
     e.preventDefault();
     setError("");
     try {
-      await signUp(fullName, email, password);
-      await createUser({ email });  //Move to SignUP
+      await signUp(fullName, email, password);  //Move to SignUP
       navigate("/");
     } catch (err) {
       setError(err.message);
     }
   };
-
   return (
     <>
       <div className="background-image" style={{backgroundImage: "url(https://wallpaperaccess.com/full/1512223.jpg)", 
