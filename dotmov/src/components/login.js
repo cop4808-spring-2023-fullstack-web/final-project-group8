@@ -19,7 +19,7 @@ const Login = () => {
     setError("");
     try {
       await logIn(email, password);
-      navigate("/home");
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }
@@ -48,7 +48,7 @@ const Login = () => {
        <GoogleButton
        className="g-btn"
        type="dark"
-       style={{backgroundColor: "#38CDD7", borderRadius: "25px"}}
+       style={{backgroundColor: "#38CDD7", borderRadius: "25px", width: "auto"}}
       onClick={handleGoogleSignIn}
       />
 </div>

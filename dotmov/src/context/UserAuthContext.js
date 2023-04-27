@@ -9,11 +9,16 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../configs/firebase";
 import { doc, setDoc} from "firebase/firestore";
+// import { useNavigate } from "react-router-dom";
 
 const userAuthContext = createContext();
 
+export const useAuth = () => { return useContext(userAuthContext)};
+
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState({});
+  const [error, setError] = useState("");
+  // const navigate = useNavigate();
 
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
@@ -21,31 +26,12 @@ export function UserAuthContextProvider({ children }) {
   function signUp(fullName, email, password) {
     
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-
-      setDoc(doc(db, "RegisteredUsers", user.uid), {
-        fullName,
-        email
-      })
-       .then(() => {
-         console.log("Document successfully written!");
-
-    })
-    .catch((error) => {
-      throw error;
-    });
-
-      // Set user data in local storage
-      localStorage.setItem("user", JSON.stringify(user));
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
   }
+
   function logOut() {
     return signOut(auth);
   }
+  
   function googleSignIn() {
     const googleAuthProvider = new GoogleAuthProvider();
     return signInWithPopup(auth, googleAuthProvider);

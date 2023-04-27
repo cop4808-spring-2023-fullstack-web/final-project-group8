@@ -29,6 +29,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setName] = useState("");
   const { signUp } = useUserAuth();
   let navigate = useNavigate();
 
@@ -59,7 +60,7 @@ const Signup = () => {
             <Form.Control
               type="name"
               placeholder="FULL NAME"
-              // onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               style={{borderRadius: "35px", height: "40px", paddingLeft: "15px", fontSize: "13px"}}
             />
           </Form.Group>

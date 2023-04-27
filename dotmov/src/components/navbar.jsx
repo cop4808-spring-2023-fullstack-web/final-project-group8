@@ -1,8 +1,22 @@
+import { useState, useEffect } from "react";
 import { Navbar, Nav, Container, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/UserAuthContext";
 import "../App.css";
 
 function NavigationBar() {
+  const { logout } = useAuth();
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    setCurrentUser(useAuth.currentUser);
+  }, []);
+
+  function handleLogout() {
+    logout();
+    setCurrentUser(null);
+  }
+
   return (
     <Navbar bg="dark" expand="lg" style={{ zIndex: 2 }}>
       <Container fluid>
@@ -26,18 +40,28 @@ function NavigationBar() {
               <Button variant="outline-success">Search</Button>
             </Form>
 
-            <Nav.Link href="#action1" style={{ color: "#FFFFFF" }}>
+            <Nav.Link href="/" style={{ color: "#FFFFFF" }}>
               All Movies
             </Nav.Link>
             <Nav.Link href="#action2" style={{ color: "#FFFFFF" }}>
               TV Shows
             </Nav.Link>
 
-            <Link to="/login">
-              <Button variant="outline-light" className="ms-2">
-                Login
+            {currentUser ? (
+              <Button
+                variant="outline-light"
+                className="ms-2"
+                onClick={handleLogout}
+              >
+                Logout
               </Button>
-            </Link>
+            ) : (
+              <Link to="/login">
+                <Button variant="outline-light" className="ms-2">
+                  Login
+                </Button>
+              </Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
