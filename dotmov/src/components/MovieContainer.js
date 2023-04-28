@@ -13,7 +13,6 @@ const MovieContainer = ({title, poster_path,vote_average, release_date, overview
         axios.post('http://localhost:5678/AddFavorite', { userID, movieID })
           .then(response => {
             console.log(response.data);
-            axios.put()
           })
           .catch(error => {
             console.error(error);
