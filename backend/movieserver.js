@@ -45,10 +45,13 @@ app.post('/AddFavorite', async (req, res) => {
       throw new Error('User not found');
     }
     const favoriteMovies = user.favoriteMovies || [];
-    favoriteMovies.push(movieID);
+    if (favoriteMovies.includes(movieID)) { // Checking For Duplicates before adding
+      return res.status(400).json({ error: 'Movie already in favorites list' });
+    }
+    favoriteMovies.push(movieID); // Push Movie
     await collection.updateOne(
       { 'user.firebaseUID': userID },
-      { $set: { favoriteMovies } }
+      { $set: { favoriteMovies } } // Update the Favorite List
     );
     res.json({ message: 'Favorite movie added successfully' });
   } catch (error) {
@@ -65,9 +68,9 @@ app.post('/DeleteFavorite', async (req, res) => {
     if (!user) {
       throw new Error('User not found');
     }
-    const favoriteMovies = user.favoriteMovies || [];
-    const movieIndex = favoriteMovies.indexOf(movieID);
-    if (movieIndex === -1) {
+    const favoriteMovies = user.favoriteMovies || []; // UserFavorites or Empty Array
+    const movieIndex = favoriteMovies.indexOf(movieID); // Finds Index of the Movie ID to be Deleted
+    if (movieIndex === -1) { // -1 = Not Found
       throw new Error('Movie does not exist');
     }
     favoriteMovies.splice(movieIndex, 1); //Takes Index of movie and splices(deletes) the movie (Start, Howmany)
