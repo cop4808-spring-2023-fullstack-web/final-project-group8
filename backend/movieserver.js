@@ -1,5 +1,6 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
+const axios = require('axios');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const router = express.Router()
@@ -39,14 +40,42 @@ app.post('/AddFavorite', async (req, res) => {
   try {
     const userID = req.body.userID;
     const movieID = req.body.movieID;
-    const user = await collection.findOne({ 'user._id': userID });
+    const user = await collection.findOne({ 'user.firebaseUID': userID });
     if (!user) {
       throw new Error('User not found');
     }
     const favoriteMovies = user.favoriteMovies || [];
-    favoriteMovies.push(movieID);
+    if (favoriteMovies.includes(movieID)) { // Checking For Duplicates before adding
+      return res.status(400).json({ error: 'Movie already in favorites list' });
+    }
+    favoriteMovies.push(movieID); // Push Movie
     await collection.updateOne(
-      { 'user._id': userID },
+      { 'user.firebaseUID': userID },
+      { $set: { favoriteMovies } } // Update the Favorite List
+    );
+    res.json({ message: 'Favorite movie added successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to add favorite movie' });
+  }
+});
+
+app.post('/DeleteFavorite', async (req, res) => {
+  try {
+    const userID = req.body.userID;
+    const movieID = req.body.movieID;
+    const user = await collection.findOne({ 'user.firebaseUID': userID });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const favoriteMovies = user.favoriteMovies || []; // UserFavorites or Empty Array
+    const movieIndex = favoriteMovies.indexOf(movieID); // Finds Index of the Movie ID to be Deleted
+    if (movieIndex === -1) { // -1 = Not Found
+      throw new Error('Movie does not exist');
+    }
+    favoriteMovies.splice(movieIndex, 1); //Takes Index of movie and splices(deletes) the movie (Start, Howmany)
+    await collection.updateOne(
+      { 'user.firebaseUID': userID },
       { $set: { favoriteMovies } }
     );
     res.json({ message: 'Favorite movie added successfully' });

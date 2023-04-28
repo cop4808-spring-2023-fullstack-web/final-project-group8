@@ -7,27 +7,30 @@ const API_IMG ="https://image.tmdb.org/t/p/w500/";
 
 const MovieContainer = ({title, poster_path,vote_average, release_date, overview , id}) => {
 
-    const sendFavorite = (event) => {
-        const userID = auth.currentUser.uid;
-        const movieID = event.target.id;
-        axios.post('http://localhost:5678/AddFavorite', { userID, movieID })
-          .then(response => {
-            console.log(response.data);
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      }
-    return(
-        <div className="card text-center bg-secondary mb-3">
+  const sendFavorite = (event) => {
+    const userID = auth.currentUser.uid;
+    const movieID = event.target.id;
+    axios.post('http://localhost:5678/AddFavorite', { userID, movieID })
+      .then(response => {
+        console.log(response.data);
+        //axios.put()
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+return(
+    <div className="card text-center singleMovie mb-3">
+        <div className="card-body">
+            <img className= "card-img-top" src={API_IMG+poster_path} />
             <div className="card-body">
-                <img className= "card-img-top" src={API_IMG+poster_path} />
-                <div className="card-body">
-                    <button type="button" className="btn btn-dark" id={id} onClick={sendFavorite}> Add to favorites </button>
-                </div>
+            <h5 className="card-title">{title}</h5>
+            <p className="card-text">Rating: {vote_average}</p>
+                <button type="button" className="btn btn-dark" id={id} onClick={sendFavorite}> Add to favorites </button>
             </div>
         </div>
-    )
+    </div>
+)
 }
 
 export default MovieContainer;

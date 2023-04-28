@@ -14,8 +14,8 @@ body{
 
 .moviesContainer{
   width:100%;
-  margin: 1em auto;
-  background-color:#131414;
+  margin: 1em 2em 2em 1em;
+  background-color:black;
 }
 
 .moviesGrid{
@@ -24,9 +24,17 @@ body{
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 0.2em;
   justify-content: center;
-
 }
 
+.singleMovie{
+  background-color: black;
+  border: solid #38CDD7 0.5px;
+}
+
+.singleMovie:hover{
+  box-shadow: 5px 5px 5px #494646;
+  transform: translateY(-10px);
+}
 
 a {
   text-decoration: none;
@@ -75,7 +83,7 @@ a:active {
   text-align: center;
   width: 30%;
   margin: auto;
-  margin-top: 250px;
+  margin-top: 150px;
   padding-left: 50px !important;
   padding-right: 50px !important;
   margin-bottom: 40px;
@@ -94,7 +102,7 @@ a:active {
   z-index: 1 !important;
 }
 
-.overlay{
+.overlay1{
   position: absolute;
   top: 0;
   left: 0;

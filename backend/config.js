@@ -1,11 +1,18 @@
-var config = {};
+require('dotenv').config()
 
-config.app = {};
-config.server = {};
-config.db = {};
-
-//Server Port
-config.server.port = 5678;
+const config = {
+  server: {
+    port: process.env.SERVER_PORT
+  },
+  db: {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    pass: process.env.DB_PASS,
+    name: process.env.DB_NAME,
+    collection: process.env.DB_COLLECTION
+  }
+}
 
 //MongoDB Credentials
 config.db.host = 'moviecluster.00ru6v3.mongodb.net';

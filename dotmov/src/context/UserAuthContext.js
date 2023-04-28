@@ -7,60 +7,63 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { auth, db } from "../configs/firebase";
-import { doc, setDoc} from "firebase/firestore";
+import { auth } from "../configs/firebase";
+// import { useNavigate } from "react-router-dom";
 
 const userAuthContext = createContext();
 
+export const useAuth = () => { return useContext(userAuthContext)};
+
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState({});
+  const [signupError, setSignUpError] = useState("");
+  // const navigate = useNavigate();
 
   function logIn(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        setUser(user);
+        console.log(user); // log updated user object
+      });
   }
-  function signUp(fullName, email, password) {
-    
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
 
-      setDoc(doc(db, "RegisteredUsers", user.uid), {
-        fullName,
-        email
-      })
-       .then(() => {
-         console.log("Document successfully written!");
 
-    })
+
+  function signUp(email, password, firstName, lastName) {
+    setSignUpError("");
+    return createUserWithEmailAndPassword(auth, email, password) 
+
     .catch((error) => {
-      throw error;
+      if (error.code === "auth/email-already-in-use") {
+        setSignUpError("Email already in use");
+      } else if (error.code === "auth/invalid-email") {
+        setSignUpError("Invalid email address");
+      } else if (error.code === "auth/weak-password") {
+        setSignUpError("Password is too weak");
+      } else {
+        setSignUpError(error.message);
+      }
     });
+}
 
-      // Set user data in local storage
-      localStorage.setItem("user", JSON.stringify(user));
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
-  }
   function logOut() {
     return signOut(auth);
   }
+  
   function googleSignIn() {
     const googleAuthProvider = new GoogleAuthProvider();
     return signInWithPopup(auth, googleAuthProvider);
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-      console.log("Auth", currentuser);
-      setUser(currentuser);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
     });
 
-    return () => {
-      unsubscribe();
-    };
+    return unsubscribe;
   }, []);
+  
 
   return (
     <userAuthContext.Provider
@@ -71,6 +74,3 @@ export function UserAuthContextProvider({ children }) {
   );
 }
 
-export function useUserAuth() {
-  return useContext(userAuthContext);
-}

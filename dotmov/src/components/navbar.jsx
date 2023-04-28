@@ -1,12 +1,29 @@
 import { Navbar, Nav, Container, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/UserAuthContext";
 import "../App.css";
 
-function NavigationBar() {
+function NavigationBar({}) {
+  const { user, logOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      let loggedOut = await logOut();
+      if (loggedOut === true) {
+        navigate("/");
+      } else {
+        throw loggedOut;
+      }
+    } catch (error) {
+      throw new Error("Failed to log out");
+    }
+  };
+
   return (
     <Navbar bg="dark" expand="lg" style={{ zIndex: 2 }}>
       <Container fluid>
-        <Navbar.Brand href="#" style={{ color: "#38CDD7" }}>
+        <Navbar.Brand href="/" style={{ color: "#38CDD7" }}>
           dotMOV
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -26,18 +43,27 @@ function NavigationBar() {
               <Button variant="outline-success">Search</Button>
             </Form>
 
-            <Nav.Link href="#action1" style={{ color: "#FFFFFF" }}>
+            <Nav.Link href="/" style={{ color: "#FFFFFF" }}>
               All Movies
             </Nav.Link>
             <Nav.Link href="#action2" style={{ color: "#FFFFFF" }}>
               TV Shows
             </Nav.Link>
-
-            <Link to="/login">
-              <Button variant="outline-light" className="ms-2">
-                Login
+            {user ? (
+              <Button
+                variant="outline-light"
+                className="ms-2"
+                onClick={handleLogout}
+              >
+                Logout
               </Button>
-            </Link>
+            ) : (
+              <Link to="/login">
+                <Button variant="outline-light" className="ms-2">
+                  Login
+                </Button>
+              </Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -45,4 +71,8 @@ function NavigationBar() {
   );
 }
 
-export default NavigationBar;
+export default function NavigationBarWrapper() {
+  const { user } = useAuth();
+
+  return <NavigationBar user={user} />;
+}
