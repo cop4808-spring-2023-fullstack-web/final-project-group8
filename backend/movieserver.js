@@ -46,7 +46,8 @@ app.post('/AddFavorite', async (req, res) => {
     }
     const favoriteMovies = user.favoriteMovies || [];
     if (favoriteMovies.includes(movieID)) { // Checking For Duplicates before adding
-      return res.status(400).json({ error: 'Movie already in favorites list' });
+      res.json({ message: 'Movie already in favorites list' });
+      return res.status(400);
     }
     favoriteMovies.push(movieID); // Push Movie
     await collection.updateOne(
