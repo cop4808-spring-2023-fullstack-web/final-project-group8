@@ -8,6 +8,11 @@ import Footer from "../components/footer/footer";
 import axios from "axios";
 import "../components/details/details.css";
 
+//Rating
+import Rating from "@mui/material/Rating";
+import StarIcon from "@mui/icons-material/Star";
+import Box from "@mui/material/Box";
+
 const BASE_API = axios.create({ baseURL: "https://api.themoviedb.org/3/" });
 const BASE_AXIOS = axios.create({
   baseURL: "https://api.themoviedb.org/3%22%7D",
@@ -34,6 +39,7 @@ function Details() {
   const [overview, setOverview] = useState(null);
   const [votes, setVotes] = useState(null);
   const [release_date, setReleaseDate] = useState(null);
+
   //Put somewhere else
   function fetchSingleMovie(id) {
     var mov = BASE_AXIOS.get(
@@ -89,7 +95,6 @@ function Details() {
             />
             <div className="row poster">
               <div className="container d-flex">
-                {/* Movie Info */}
                 {/* Poster Image */}
                 <img
                   key={movie}
@@ -97,18 +102,44 @@ function Details() {
                   src={base_img_url + posterUrl}
                   alt=""
                 />
+
+                {/* Movie Info */}
                 <div className="description">
                   <div className="title">{title}</div>
                   <div className="overview">{overview}</div>
                   <br />
                   <div className="votes">{votes}/10</div>
+                  {/* Rating */}
+                  <Box
+                    sx={{
+                      width: 200,
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Rating
+                      name="text-feedback"
+                      value={votes}
+                      readOnly
+                      precision={0.5}
+                      emptyIcon={
+                        <StarIcon
+                          style={{ opacity: 0.55, color: "white" }}
+                          fontSize="inherit"
+                        />
+                      }
+                      max={11}
+                    />
+                  </Box>
                 </div>
               </div>
+              <div className="cast-title ">Cast</div>
             </div>
           </div>
         </div>
-        <div className="cast">{overview}</div>
       </div>
+
+      {/* Cast */}
 
       <div>
         <Footer />
