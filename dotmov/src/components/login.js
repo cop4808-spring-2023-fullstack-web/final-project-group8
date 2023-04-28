@@ -57,7 +57,7 @@ const Login = () => {
     <>
     <div className="background-image" style={{backgroundImage: "url(https://wallpaperaccess.com/full/1512223.jpg)", 
         zIndex: "1",}}>
-      <div className="overlay"> </div>
+      <div className="overlay1"> </div>
       <div className="p-4 box flex-column align-items-center text-center">
         <h2 className="mb-3" style={{color:"white"}}>Welcome!</h2>
         {error && <Alert variant="danger">{error}</Alert>}

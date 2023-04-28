@@ -32,7 +32,7 @@ function HeroCarousel() {
             }}
           ></div>
           <Carousel.Caption>
-            <Container className="overlay">
+            <Container className="hero-overlay">
             <Row>
               <Col xs={12} md={12}>
                 <h2>{movie.title}</h2>
