@@ -57,5 +57,30 @@ app.post('/AddFavorite', async (req, res) => {
   }
 });
 
+app.post('/DeleteFavorite', async (req, res) => {
+  try {
+    const userID = req.body.userID;
+    const movieID = req.body.movieID;
+    const user = await collection.findOne({ 'user.firebaseUID': userID });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const favoriteMovies = user.favoriteMovies || [];
+    const movieIndex = favoriteMovies.indexOf(movieID);
+    if (movieIndex === -1) {
+      throw new Error('Movie does not exist');
+    }
+    favoriteMovies.splice(movieIndex, 1); //Takes Index of movie and splices(deletes) the movie (Start, Howmany)
+    await collection.updateOne(
+      { 'user.firebaseUID': userID },
+      { $set: { favoriteMovies } }
+    );
+    res.json({ message: 'Favorite movie added successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to add favorite movie' });
+  }
+});
+
 app.listen(5678); //start the server
 console.log('Server is running...');
