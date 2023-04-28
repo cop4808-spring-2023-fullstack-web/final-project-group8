@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 
 // Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Footer = () => {
-  return (
+function Footer() {
+  const [showFooter, setShowFooter] = useState(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      const isBottom =
+        window.innerHeight + window.pageYOffset >=
+        document.documentElement.scrollHeight;
+
+      setShowFooter(isBottom);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return showFooter ? (
     <>
       <footer
         className="bg-dark py-3 footer"
@@ -41,6 +56,6 @@ const Footer = () => {
         </div>
       </footer>
     </>
-  );
-};
+  ) : null;
+}
 export default Footer;
