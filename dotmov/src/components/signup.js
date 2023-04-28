@@ -6,23 +6,70 @@ import { useAuth } from "../context/UserAuthContext";
 import axios from "axios";
 import { auth } from '../configs/firebase.js'
 
+const createUser = async (user, favoriteMovies = []) => {
+  try {
+    const userID = auth.currentUser.uid;
+    user.firebaseUID = userID;
+    const response = await axios.post('http://localhost:5678/AddUser', {
+      user,
+      favoriteMovies,
+    });
+    if (response.status !== 200) {
+      throw new Error('Failed to create user');
+    }
+    const result = response.data;
+    console.log(`Created user with ID ${result.UserID}`);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [fullName, setName] = useState("");
-  const { signUp } = useAuth();
+  const { signUp, logIn } = useAuth();
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    try {
-      await signUp(fullName, email, password);  //Move to SignUP
-      navigate("/");
-    } catch (err) {
-      setError(err.message);
+
+    if (!fullName || !email || !password || !confirmPassword) {
+      return setError('Please fill in all the fields');
     }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      return setError('Please enter a valid email address');
+    }
+
+    if (password.length < 6) {
+      return setError('Password should be at least 6 characters');
+    }
+
+    if (password !== confirmPassword) {
+      return setError('Passwords do not match');
+    }
+
+    try {
+      setError('');
+      setLoading(true);
+      await signUp(email, password, fullName);
+      console.log("Sign up success")
+      setTimeout(async () => {
+        await logIn(email, password);
+        await createUser({ email, fullName }); 
+        navigate("/");
+        setLoading(false);
+      }, 2000);
+  
+    } catch {
+      setError('Failed to create an account');
+    }
+
+    setLoading(false);
   };
   return (
     <>
@@ -67,7 +114,7 @@ const Signup = () => {
             <Form.Control
               type="password"
               placeholder="CONFIRM PASSWORD"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               style={{borderRadius: "35px", height: "40px", paddingLeft: "15px", fontSize: "13px"}}
             />
           </Form.Group>

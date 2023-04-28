@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import '../App.css';
 import MovieContainer from '../components/MovieContainer';
-import HeroCarousel from '../components/HeroCarousel';
+import HeroCarousel from '../components/HeroImg/HeroCarousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 

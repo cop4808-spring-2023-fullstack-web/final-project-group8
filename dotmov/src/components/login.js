@@ -37,7 +37,6 @@ const Login = () => {
     setError("");
     try {
       await logIn(email, password);
-      await createUser({ email });
       navigate("/");
     } catch (err) {
       setError(err.message);

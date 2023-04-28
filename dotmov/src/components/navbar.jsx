@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
 import { Navbar, Nav, Container, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UserAuthContext";
 import "../App.css";
 
-function NavigationBar({ user }) {
-  const { currentUser, logOut } = useAuth();
+function NavigationBar({}) {
+  const { user, logOut } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -17,7 +16,7 @@ function NavigationBar({ user }) {
         throw loggedOut;
       }
     } catch (error) {
-      console.log(error.message);
+      throw new Error("Failed to log out");
     }
   };
 
