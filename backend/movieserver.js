@@ -40,7 +40,7 @@ app.post('/AddFavorite', async (req, res) => {
   try {
     const userID = req.body.userID;
     const movieID = req.body.movieID;
-    const user = await collection.findOne({ 'user._id': userID });
+    const user = await collection.findOne({ 'user.firebaseUID': userID });
     if (!user) {
       throw new Error('User not found');
     }
@@ -50,7 +50,7 @@ app.post('/AddFavorite', async (req, res) => {
     }
     favoriteMovies.push(movieID); // Push Movie
     await collection.updateOne(
-      { 'user._id': userID },
+      { 'user.firebaseUID': userID },
       { $set: { favoriteMovies } } // Update the Favorite List
     );
     res.json({ message: 'Favorite movie added successfully' });
@@ -75,7 +75,7 @@ app.post('/RemoveFavorite', async (req, res) => {
     }
     favoriteMovies.splice(movieIndex, 1);
     await collection.updateOne(
-      { 'user._id': userID },
+      { 'user.firebaseUID': userID },
       { $set: { favoriteMovies } }
     );
     res.json({ message: 'Favorite movie removed successfully' });

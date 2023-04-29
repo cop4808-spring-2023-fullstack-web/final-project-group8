@@ -3,6 +3,8 @@ import '../App.css';
 import MovieContainer from '../components/MovieContainer';
 import Footer from "../components/footer/footer";
 import axios from 'axios';
+import firebase from '../configs/firebase.js'
+import { auth } from '../configs/firebase.js'
 
 const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
 
@@ -13,9 +15,9 @@ function Profile() {
     const [movies, setMovies] = useState([]);
     
       useEffect(() => {
-        axios.get(`/FavoriteMovies/${userID}`)
+        axios.get(`http://localhost:5678/FavoriteMovies/${userID}`)
           .then(response => {
-            console.dir(response.data.favoriteMovies);
+            console.dir(response);
             setFavoriteMovies(response.data.favoriteMovies);
           })
           .catch(error => {
