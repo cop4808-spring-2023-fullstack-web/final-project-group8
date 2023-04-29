@@ -9,6 +9,7 @@ const MovieContainer = ({title, poster_path,vote_average, release_date, overview
 
   const sendFavorite = (event) => {
     const userID = auth.currentUser.uid;
+    console.dir(auth.currentUser.uid);
     const movieID = event.target.id;
     axios.post('http://localhost:5678/AddFavorite', { userID, movieID })
       .then(response => {

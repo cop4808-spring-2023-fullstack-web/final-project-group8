@@ -49,6 +49,9 @@ function NavigationBar({}) {
             <Nav.Link href="#action2" style={{ color: "#FFFFFF" }}>
               TV Shows
             </Nav.Link>
+            <Nav.Link href="/profile" style={{ color: "#FFFFFF" }}>
+              Profile
+            </Nav.Link>
             {user ? (
               <Button
                 variant="outline-light"
@@ -57,6 +60,7 @@ function NavigationBar({}) {
               >
                 Logout
               </Button>
+
             ) : (
               <Link to="/login">
                 <Button variant="outline-light" className="ms-2">
