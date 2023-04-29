@@ -9,7 +9,6 @@ const MovieContainer = ({title, poster_path,vote_average, release_date, overview
 
   const sendFavorite = (event) => {
     const userID = auth.currentUser.uid;
-    console.dir(auth.currentUser.uid);
     const movieID = event.target.id;
     axios.post('http://localhost:5678/AddFavorite', { userID, movieID })
       .then(response => {
@@ -27,7 +26,7 @@ return(
             <div className="card-body">
             <h5 className="card-title">{title}</h5>
             <p className="card-text">Rating: {vote_average}</p>
-                <button type="button" className="btn btn-dark" id={id} onClick={sendFavorite}> Add to favorites </button>
+            <button type="button" className="btn btn-dark" id={id} onClick={sendFavorite}> Add to favorites </button>
             </div>
         </div>
     </div>
