@@ -46,8 +46,7 @@ app.post('/AddFavorite', async (req, res) => {
     }
     const favoriteMovies = user.favoriteMovies || [];
     if (favoriteMovies.includes(movieID)) { // Checking For Duplicates before adding
-      res.json({ message: 'Movie already in favorites list' });
-      return res.status(400);
+      return res.status(400).json({ error: 'Movie already in favorites list' });
     }
     favoriteMovies.push(movieID); // Push Movie
     await collection.updateOne(
@@ -61,7 +60,7 @@ app.post('/AddFavorite', async (req, res) => {
   }
 });
 
-app.post('/DeleteFavorite', async (req, res) => {
+app.post('/RemoveFavorite', async (req, res) => {
   try {
     const userID = req.body.userID;
     const movieID = req.body.movieID;
@@ -69,22 +68,40 @@ app.post('/DeleteFavorite', async (req, res) => {
     if (!user) {
       throw new Error('User not found');
     }
-    const favoriteMovies = user.favoriteMovies || []; // UserFavorites or Empty Array
-    const movieIndex = favoriteMovies.indexOf(movieID); // Finds Index of the Movie ID to be Deleted
-    if (movieIndex === -1) { // -1 = Not Found
-      throw new Error('Movie does not exist');
+    const favoriteMovies = user.favoriteMovies || [];
+    const movieIndex = favoriteMovies.indexOf(movieID);
+    if (movieIndex === -1) {
+      throw new Error('Movie not found in favorites');
     }
-    favoriteMovies.splice(movieIndex, 1); //Takes Index of movie and splices(deletes) the movie (Start, Howmany)
+    favoriteMovies.splice(movieIndex, 1);
     await collection.updateOne(
       { 'user.firebaseUID': userID },
       { $set: { favoriteMovies } }
     );
-    res.json({ message: 'Favorite movie added successfully' });
+    res.json({ message: 'Favorite movie removed successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to add favorite movie' });
+    res.status(500).json({ error: 'Failed to remove favorite movie' });
   }
 });
 
+app.get('/FavoriteMovies/:userID', async (req, res) => {
+  try {
+    const userID = req.params.userID;
+    const user = await collection.findOne({ 'user.firebaseUID': userID });
+    console.dir(userID)
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const favoriteMovies = user.favoriteMovies || [];
+    res.json({ favoriteMovies });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to get favorite movies' });
+  }
+});
+
+
+  
 app.listen(5678); //start the server
 console.log('Server is running...');
