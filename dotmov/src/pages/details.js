@@ -51,7 +51,7 @@ function Details() {
   console.log("ID:", id);
   const movieID = id;
 
-  //Put in another page later
+  //Put somewhere else
   function fetchSingleMovie(id) {
     var mov = BASE_AXIOS.get(
       `https://api.themoviedb.org/3/movie/${movieID}?api_key=${API_KEY}`
