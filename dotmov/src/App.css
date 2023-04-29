@@ -1,16 +1,48 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700&display=swap");
+
+
+body{
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style-type: none;
+  outline: none;
+  background-color:black;
+  color:white;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.moviesContainer{
+  width:100%;
+  margin: 1em 2em 2em 1em;
+  background-color:black;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.moviesGrid{
+  display: grid;
+  margin-left: .5px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0.2em;
+  justify-content: center;
+}
+
+.singleMovie{
+  background-color: black;
+  border: solid #38CDD7 0.5px;
+}
+
+.singleMovie:hover{
+  box-shadow: 5px 5px 5px #494646;
+  transform: translateY(-10px);
+}
+
+a {
+  text-decoration: none;
+  color: #38CDD7;
+}
+
+a:active {
+  color: #FFFFFF;
 }
 
 .App-header {
@@ -49,9 +81,11 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   background-color: rgba(0, 0, 0, 0.7);
   text-align: center;
-  width: 40%;
+  width: 30%;
   margin: auto;
-  margin-top: 250px;
+  margin-top: 150px;
+  padding-left: 50px !important;
+  padding-right: 50px !important;
   margin-bottom: 40px;
   border-radius: 5%;
   z-index: 2 !important;
@@ -68,10 +102,29 @@
   z-index: 1 !important;
 }
 
-.g-btn{
-  align-content: center !important;
+.overlay1{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+  
 }
+
 .g-btn > div,
 .g-btn > div > svg {
  background: none !important;
+}
+
+.fields{
+  margin-top: 30px !important;
+}
+
+.login-btn{
+  background-color: #38CDD7 !important;
+  border: #38CDD7;
+  width:50%;
+  margin-top: 20px;
 }

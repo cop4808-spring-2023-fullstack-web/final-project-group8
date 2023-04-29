@@ -11,4 +11,10 @@ client.connect((err)=>{
     else
         console.log("Connected Successfully")
 })
+
+const db = client.db('moviesDB');
+const collection = db.collection('UserFavorites')
+
+const moviesCollection = db.collection('Movies');
+
 module.exports = client;

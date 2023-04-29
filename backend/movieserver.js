@@ -1,7 +1,9 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
+const axios = require('axios');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const router = express.Router()
 const corsOptions ={
   origin:'http://localhost:3000',
   credentials:true,
@@ -23,19 +25,83 @@ const collection = database.collection(config.db.collection)
 
 var http = require("https");
 
-// Manual Insert of a Favorite Movie
-const newFavorite = {
-  user_id:1234,
-  movie_id:12345,
-  title: "The Godfather",
-  release_date: "1972-03-14",
-  poster_path: "/rPdtLWNsZmAtoZl9PK7S2wE3qiS.jpg"
-};
-collection.insertOne(newFavorite, function(err,res){
-  if (err) throw err;
-    console.log("1 Movie inserted");
-    client.close();
-})
+app.post('/AddUser', async (req, res) => {
+  try{
+    const newUser = req.body;
+    const result = await collection.insertOne(newUser);
+    res.json({ UserID: result.insertedId });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to Create User' });
+  }
+});
+
+app.post('/AddFavorite', async (req, res) => {
+  try {
+    const userID = req.body.userID;
+    const movieID = req.body.movieID;
+    const user = await collection.findOne({ 'user.firebaseUID': userID });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const favoriteMovies = user.favoriteMovies || [];
+    if (favoriteMovies.includes(movieID)) { // Checking For Duplicates before adding
+      return res.status(400).json({ error: 'Movie already in favorites list' });
+    }
+    favoriteMovies.push(movieID); // Push Movie
+    await collection.updateOne(
+      { 'user.firebaseUID': userID },
+      { $set: { favoriteMovies } } // Update the Favorite List
+    );
+    res.json({ message: 'Favorite movie added successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to add favorite movie' });
+  }
+});
+
+app.post('/RemoveFavorite', async (req, res) => {
+  try {
+    const userID = req.body.userID;
+    const movieID = req.body.movieID;
+    const user = await collection.findOne({ 'user.firebaseUID': userID });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const favoriteMovies = user.favoriteMovies || [];
+    const movieIndex = favoriteMovies.indexOf(movieID);
+    if (movieIndex === -1) {
+      throw new Error('Movie not found in favorites');
+    }
+    favoriteMovies.splice(movieIndex, 1);
+    await collection.updateOne(
+      { 'user.firebaseUID': userID },
+      { $set: { favoriteMovies } }
+    );
+    res.json({ message: 'Favorite movie removed successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to remove favorite movie' });
+  }
+});
+
+app.get('/FavoriteMovies/:userID', async (req, res) => {
+  try {
+    const userID = req.params.userID;
+    const user = await collection.findOne({ 'user.firebaseUID': userID });
+    console.dir(userID)
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const favoriteMovies = user.favoriteMovies || [];
+    res.json({ favoriteMovies });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to get favorite movies' });
+  }
+});
+
+
   
 app.listen(5678); //start the server
 console.log('Server is running...');

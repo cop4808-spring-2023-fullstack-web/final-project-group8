@@ -1,6 +1,6 @@
 //TMDB 
 
-const API_KEY = 'api_key=1cf50e6248dc270629e802686245c2c8';
+const API_KEY = 'api_key=c6b00a5290f232b05948d37e75ae7a76';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const API_URL = BASE_URL + '/discover/movie?sort_by=popularity.desc&'+API_KEY;
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
@@ -220,7 +220,7 @@ function showMovies(data) {
                 <h3>Overview</h3>
                 ${overview}
                 <br/> 
-                <button class="know-more" id="${id}">Know More</button
+                <button class="know-more" id="${id}">Add to Favorites</button
             </div>
         
         `
@@ -229,9 +229,29 @@ function showMovies(data) {
 
         document.getElementById(id).addEventListener('click', () => {
           console.log(id)
-          openNav(movie)
+          AddFavorite(id)
+          //openNav(movie)
         })
     })
+}
+
+function AddFavorite(id) {
+  fetch("https://api.themoviedb.org/3/account/18843546/favorite?api_key=c6b00a5290f232b05948d37e75ae7a76&session_id=4a8544c2a51596b7301c46e834adb233ec2241d9", {
+  method: "post",
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  //make sure to serialize your JSON body
+  body: JSON.stringify({
+    media_type: "movie",
+    media_id: id,
+    favorite: true
+  })
+})
+.then( (response) => { 
+   console.log("Success")
+});
 }
 
 const overlayContent = document.getElementById('overlay-content');
