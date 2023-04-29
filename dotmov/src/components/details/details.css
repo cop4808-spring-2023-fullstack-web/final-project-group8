@@ -48,3 +48,7 @@
   margin-top: 3%;
   font-size: x-large;
 }
+
+.slick-slide {
+  width: 230px !important;
+}

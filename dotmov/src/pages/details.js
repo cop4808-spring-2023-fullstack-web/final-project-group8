@@ -13,6 +13,9 @@ import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
 import Box from "@mui/material/Box";
 
+//Cast
+import Cast from "../components/details/cast";
+
 const BASE_API = axios.create({ baseURL: "https://api.themoviedb.org/3/" });
 const BASE_AXIOS = axios.create({
   baseURL: "https://api.themoviedb.org/3%22%7D",
@@ -51,27 +54,27 @@ function Details() {
         //Set Movie Information
 
         //Title
-        console.log("Movie Data Name:", movie.data.original_title);
+        //console.log("Movie Data Name:", movie.data.original_title);
         setTitle(movie.data.original_title);
 
         //Backdrop_url
-        console.log("Movie BackDrop Path:", movie.data.backdrop_path);
+        //console.log("Movie BackDrop Path:", movie.data.backdrop_path);
         setBackdropUrl(movie.data.backdrop_path);
 
         //Poster_url
-        console.log("Movie Poster Path:", movie.data.poster_path);
+        //console.log("Movie Poster Path:", movie.data.poster_path);
         setPosterUrl(movie.data.poster_path);
 
         //Overview
-        console.log("Movie Overview:", movie.data.overview);
+        //console.log("Movie Overview:", movie.data.overview);
         setOverview(movie.data.overview);
 
         //Vote Average
-        console.log("Movie Vote Average:", movie.data.vote_average);
+        //console.log("Movie Vote Average:", movie.data.vote_average);
         setVotes(movie.data.vote_average);
 
         //Releasr
-        console.log("Movie Vote Average:", movie.data.release_date);
+        //console.log("Movie Vote Average:", movie.data.release_date);
         setReleaseDate(movie.data.release_date);
       })
       .catch((err) => console.log(err));
@@ -134,6 +137,7 @@ function Details() {
                 </div>
               </div>
               <div className="cast-title ">Cast</div>
+              <Cast id={movieID} />
             </div>
           </div>
         </div>
