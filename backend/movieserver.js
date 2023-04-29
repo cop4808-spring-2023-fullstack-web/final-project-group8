@@ -101,7 +101,16 @@ app.get('/FavoriteMovies/:userID', async (req, res) => {
   }
 });
 
+app.get('/search', async (req, res) => {
+  const query = req.query.query;
+  try {
+    const response = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${query}`);
+    res.json({ movies: response.data.results });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
+})
 
-  
 app.listen(5678); //start the server
 console.log('Server is running...');

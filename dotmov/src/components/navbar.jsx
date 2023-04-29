@@ -1,11 +1,16 @@
 import { Navbar, Nav, Container, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useAuth } from "../context/UserAuthContext";
+import axios from "axios";
 import "../App.css";
+
+const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
 
 function NavigationBar({}) {
   const { user, logOut } = useAuth();
   const navigate = useNavigate();
+  const [query, setQuery] = useState("");
 
   const handleLogout = async () => {
     try {
@@ -17,6 +22,21 @@ function NavigationBar({}) {
       }
     } catch (error) {
       throw new Error("Failed to log out");
+    }
+  };
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`
+      );
+      console.log("Matching movies:", response.data.results);
+      navigate(`/results?query=${query}`, {
+        state: { movies: response.data.results },
+      });
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -39,8 +59,17 @@ function NavigationBar({}) {
                 placeholder="Search"
                 className="me-2 searchbarCSS"
                 aria-label="Search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyUp={handleSearch}
               />
-              <Button variant="outline-success">Search</Button>
+              {/* <Button
+                variant="outline-success"
+                type="submit"
+                className="position-absolute top-0 end-0 m-1"
+              >
+                <i className="bi bi-search"></i>
+              </Button> */}
             </Form>
 
             <Nav.Link href="/" style={{ color: "#FFFFFF" }}>

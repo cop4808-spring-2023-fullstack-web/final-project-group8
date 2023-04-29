@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from "axios";
-import firebase from '../configs/firebase.js'
 import { auth } from '../configs/firebase.js'
+
+
 
 const API_IMG ="https://image.tmdb.org/t/p/w500/";
 
@@ -25,8 +26,13 @@ return(
             <img className= "card-img-top" src={API_IMG+poster_path} />
             <div className="card-body">
             <h5 className="card-title">{title}</h5>
-            <p className="card-text">Rating: {vote_average}</p>
-                <button type="button" className="btn btn-dark" id={id} onClick={sendFavorite}> Add to favorites </button>
+            <div
+        className={`rating ${vote_average >= 5 ? "green" : "red"}`}
+      > Rating: {vote_average}
+      </div>
+      <div style={{marginTop:"10px"}}>
+      <button type="button" className="btn btn-dark" id={id} onClick={sendFavorite}> Add to favorites </button>
+      </div>
             </div>
         </div>
     </div>
