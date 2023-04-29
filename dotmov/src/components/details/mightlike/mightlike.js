@@ -4,19 +4,20 @@ import { useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import axios from "axios";
-import "../details/details.css";
+import "../../details/details.css";
+//import "../mightlike/mightlike.css";
 
-//Cast
-import { render } from "react-dom";
+//Might Also Like Movies
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
 
 const sliderSettings = {
   slidesToShow: 3,
   slidesToScroll: 1,
   infinite: false,
-  width: "150px",
+  width: "230px",
 };
 
 const BASE_API = axios.create({ baseURL: "https://api.themoviedb.org/3/" });
@@ -33,7 +34,7 @@ const base_img_url = "https://image.tmdb.org/t/p/w500";
 //Backdrop img_url + backdrop_url
 //emaple of backdrop https://image.tmdb.org/t/p/w500/feU1DWV5zMWxXUHJyAIk3dHRQ9c.jpg
 
-function Cast(props) {
+function MightLike(props) {
   //Get movie id from button
   const movieID = props.id;
 
@@ -43,11 +44,13 @@ function Cast(props) {
   var cast_data = [{}];
 
   function fetchCast(id) {
-    BASE_AXIOS.get(`${API_BASE_URL}${id}/credits?api_key=${API_KEY}`)
+    BASE_AXIOS.get(`${API_BASE_URL}${id}/recommendations?api_key=${API_KEY}`)
 
       .then((response) => {
         // var d = response.data.cast.slice(0, 5);
-        var d = response.data.cast;
+        var d = response.data.results;
+        console.log("DATA: ", d);
+
         var cast = JSON.parse(JSON.stringify(d));
 
         cast.forEach(function (item, index) {
@@ -55,22 +58,6 @@ function Cast(props) {
           credits.push(item);
         });
 
-        credits.forEach(function (item, index) {
-          credits.push(item);
-          console.log(
-            "Name: ",
-            item.name,
-            "Deparment:",
-            item.known_for_department
-          );
-
-          cast_data.push({
-            imgSrc: `https://image.tmdb.org/t/p/w200${item.profile_path}`,
-
-            name: item.name,
-          });
-          console.log("Cast Data:", cast_data);
-        });
         setCast(credits);
       })
       .catch((err) => console.log(err));
@@ -81,42 +68,24 @@ function Cast(props) {
 
   return (
     <>
-      {/* <div className="container-fluid" style={{ padding: "0" }}>
-        <div className="row casts" style={{ color: "white" }}>
-          <div className="content">
-            <Slider {...sliderSettings}>
-              {cast.map((card, index) => (
-                <div key={index}>
-                  <img
-                    alt={card.name}
-                    src={`https://image.tmdb.org/t/p/w200${card?.profile_path}`}
-                    width="150"
-                    height="150"
-                  />
-                  <h6>{card.name}</h6>
-                  <p>{card.known_for_department}</p>
-                </div>
-              ))}
-            </Slider>
-          </div>
-        </div>
-      </div> */}
       {cast.length > 0 && (
         <div className="container-fluid" style={{ padding: "0" }}>
           <div className="row casts" style={{ color: "white" }}>
-            <div className="content">
+            <div className="mightlike">
               <Slider {...sliderSettings}>
                 {cast.map((card, index) => (
-                  <div key={index}>
-                    <img
-                      alt={card.name}
-                      src={`https://image.tmdb.org/t/p/w200${card?.profile_path}`}
-                      width="150"
-                      height="150"
-                    />
-                    <h6>{card.name}</h6>
-                    {/* <p>{card.known_for_department}</p> */}
-                  </div>
+                  <Link to={`/details/${card.id}`}>
+                    {/* <button className="mightlike-button"> */}
+                    <div key={index}>
+                      <img
+                        alt={card.title}
+                        src={`https://image.tmdb.org/t/p/w500${card?.poster_path}`}
+                        width="250"
+                        height="250"
+                      />
+                    </div>
+                    {/* </button> */}
+                  </Link>
                 ))}
               </Slider>
             </div>
@@ -127,4 +96,4 @@ function Cast(props) {
   );
 }
 
-export default Cast;
+export default MightLike;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -14,7 +13,13 @@ import StarIcon from "@mui/icons-material/Star";
 import Box from "@mui/material/Box";
 
 //Cast
-import Cast from "../components/details/cast";
+import Cast from "../components/details/cast/cast";
+
+//Might Also Like
+import MightLike from "../components/details/mightlike/mightlike";
+
+//Get the ID of the movie clicked
+import { useParams } from "react-router-dom";
 
 const BASE_API = axios.create({ baseURL: "https://api.themoviedb.org/3/" });
 const BASE_AXIOS = axios.create({
@@ -31,7 +36,6 @@ const base_img_url = "https://image.tmdb.org/t/p/w500";
 //emaple of backdrop https://image.tmdb.org/t/p/w500/feU1DWV5zMWxXUHJyAIk3dHRQ9c.jpg
 
 //Get movie id from button
-const movieID = 315162;
 
 function Details() {
   //set movie
@@ -42,6 +46,10 @@ function Details() {
   const [overview, setOverview] = useState(null);
   const [votes, setVotes] = useState(null);
   const [release_date, setReleaseDate] = useState(null);
+
+  const { id } = useParams();
+  console.log("ID:", id);
+  const movieID = id;
 
   //Put somewhere else
   function fetchSingleMovie(id) {
@@ -141,6 +149,10 @@ function Details() {
               </div>
               <Cast id={movieID} />
             </div>
+            <div className="cast-title">
+              <h1>Might Also Like</h1>
+            </div>
+            <MightLike id={movieID} />
           </div>
         </div>
       </div>
