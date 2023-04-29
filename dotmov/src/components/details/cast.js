@@ -71,19 +71,17 @@ function Cast(props) {
           });
           console.log("Cast Data:", cast_data);
         });
+        setCast(credits);
       })
       .catch((err) => console.log(err));
-
-    setCast(credits);
   }
-
   useEffect(() => {
     fetchCast(movieID);
   }, []);
 
   return (
     <>
-      <div className="container-fluid" style={{ padding: "0" }}>
+      {/* <div className="container-fluid" style={{ padding: "0" }}>
         <div className="row casts" style={{ color: "white" }}>
           <div className="content">
             <Slider {...sliderSettings}>
@@ -102,7 +100,29 @@ function Cast(props) {
             </Slider>
           </div>
         </div>
-      </div>
+      </div> */}
+      {cast.length > 0 && (
+        <div className="container-fluid" style={{ padding: "0" }}>
+          <div className="row casts" style={{ color: "white" }}>
+            <div className="content">
+              <Slider {...sliderSettings}>
+                {cast.map((card, index) => (
+                  <div key={index}>
+                    <img
+                      alt={card.name}
+                      src={`https://image.tmdb.org/t/p/w200${card?.profile_path}`}
+                      width="150"
+                      height="150"
+                    />
+                    <h6>{card.name}</h6>
+                    {/* <p>{card.known_for_department}</p> */}
+                  </div>
+                ))}
+              </Slider>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

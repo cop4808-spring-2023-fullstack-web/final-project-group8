@@ -31,7 +31,7 @@ const base_img_url = "https://image.tmdb.org/t/p/w500";
 //emaple of backdrop https://image.tmdb.org/t/p/w500/feU1DWV5zMWxXUHJyAIk3dHRQ9c.jpg
 
 //Get movie id from button
-const movieID = 502356;
+const movieID = 315162;
 
 function Details() {
   //set movie
@@ -81,8 +81,8 @@ function Details() {
   }
 
   useEffect(() => {
-    fetchSingleMovie();
-  });
+    fetchSingleMovie(movieID);
+  }, [movieID]);
 
   return (
     <>
@@ -136,7 +136,9 @@ function Details() {
                   </Box>
                 </div>
               </div>
-              <div className="cast-title ">Cast</div>
+              <div className="cast-title">
+                <h1>Cast</h1>
+              </div>
               <Cast id={movieID} />
             </div>
           </div>
