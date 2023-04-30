@@ -8,9 +8,11 @@ import Signup from "./components/signup";
 import Home from "./pages/home";
 import Details from "./pages/details";
 import Results from "./components/Search/results";
+import Favorites from "./pages/favorites.js";
 import Movies from "./pages/movies";
 
 import ProtectedRoute from "./components/protectedRoutes";
+import PrivateRoutes from "./context/PrivateRoutes";
 import { UserAuthContextProvider } from "./context/UserAuthContext";
 
 const App = () => {
@@ -30,6 +32,8 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/details" element={<Details />} />
           <Route path="/results" element={<Results />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/details/:id" element={<Details />} />
           <Route path="/movies" element={<Movies />} />
         </Routes>
       </Router>{" "}

@@ -54,7 +54,7 @@ app.post('/AddFavorite', async (req, res) => {
     }
     const favoriteMovies = user.favoriteMovies || [];
     if (favoriteMovies.includes(movieID)) { // Checking For Duplicates before adding
-      return res.status(400).json({ error: 'Movie already in favorites list' });
+      return res.json({ error: 'Movie already in favorites list' });
     }
     favoriteMovies.push(movieID); // Push Movie
     await collection.updateOne(
@@ -64,7 +64,7 @@ app.post('/AddFavorite', async (req, res) => {
     res.json({ message: 'Favorite movie added successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to add favorite movie' });
+    res.json({ error: 'Failed to add favorite movie' });
   }
 });
 
@@ -97,7 +97,6 @@ app.get('/FavoriteMovies/:userID', async (req, res) => {
   try {
     const userID = req.params.userID;
     const user = await collection.findOne({ 'user.firebaseUID': userID });
-    console.dir(userID)
     if (!user) {
       throw new Error('User not found');
     }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Carousel, Container, Row, Col } from "react-bootstrap";
+import { Carousel, Container, Row, Col, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './HeroCarousel.css'
 
@@ -9,9 +9,9 @@ const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
 function HeroCarousel() {
   const [trendingMovies, setTrendingMovies] = useState([]);
 
+
   useEffect(() => {
-    axios
-      .get(
+    axios.get(
         `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
       )
       .then((response) => {
@@ -22,7 +22,8 @@ function HeroCarousel() {
   }, []);
 
   return (
-    <Carousel fade={true} pause={false} interval={5000}>
+    <>
+     <Carousel fade={true} pause={false} interval={5000}>
       {trendingMovies.map((movie) => (
         <Carousel.Item key={movie.id}>
           <div
@@ -39,18 +40,19 @@ function HeroCarousel() {
                 <p>{movie.overview}</p>
               </Col>
             </Row>
-            <Row>
-              <Col xs={12} md={{ span: 3, offset: 5 }}>
-                <div className="rating-box">
-                  <p>Rating: {movie.vote_average}/10</p>
-                </div>
-              </Col>
-            </Row>
+             <Row>
+                  <Col xs={12} md={{ span: 3, offset: 5 }}>
+                    <div className="rating-box">
+                      <p style={{ marginTop: "10px" }}>Rating: {movie.vote_average}/10</p>
+                    </div>
+                  </Col>
+                </Row>
             </Container>
           </Carousel.Caption>
         </Carousel.Item>
       ))}
     </Carousel>
+    </>
   );
 }
 export default HeroCarousel;

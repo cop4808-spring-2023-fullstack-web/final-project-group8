@@ -21,18 +21,20 @@ body{
 .moviesGrid{
   display: grid;
   margin-left: .5px;
+  padding:1%;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 0.2em;
   justify-content: center;
 }
 
 .singleMovie{
+  /* margin: 2%; */
   background-color: black;
-  border: solid #38CDD7 0.5px;
+  /* border: solid #38CDD7 0.5px; */
 }
 
 .singleMovie:hover{
-  box-shadow: 5px 5px 5px #494646;
+  box-shadow: 0 0 15px #555454;
   transform: translateY(-10px);
 }
 
@@ -48,8 +50,8 @@ body{
 }
 
 .green {
-  border: solid 1px green;
-  background-color: rgba(0, 128, 0, 0.498);
+  border: solid 1px #38CDD7;
+  background-color: #40dae5b6;
   color: white;
 }
 
