@@ -14,7 +14,7 @@ const Results = () => {
         <div className="moviesContainer">
           <div className="moviesGrid">
             {movies.map((movie) => (
-              <div className="card text-center singleMovie mb-3">
+              <div styles={{margin: "3%"}} className="card text-center singleMovie mb-3">
               <div style={{margin:"2%"}} key={movie.id}>
                 <img
                   src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}

@@ -47,6 +47,9 @@ const Login = () => {
     e.preventDefault();
     try {
       await googleSignIn();
+      await createUser();
+      const user = auth().currentUser;
+      console.log('Logged in user:', user);
       navigate("/");
     } catch (error) {
       console.log(error.message);
