@@ -49,25 +49,31 @@ function NavigationBar({}) {
             <Nav.Link href="#action2" style={{ color: "#FFFFFF" }}>
               TV Shows
             </Nav.Link>
-            <Nav.Link href="/profile" style={{ color: "#FFFFFF" }}>
-              Profile
-            </Nav.Link>
-            {user ? (
-              <Button
+            {user && (
+			        <>
+                <Nav.Link href="/profile" style={{ color: "#FFFFFF" }}>
+                Profile
+                </Nav.Link>
+			        </>	
+            )}
+            {user && (
+			        <>
+                <Button
                 variant="outline-light"
                 className="ms-2"
                 onClick={handleLogout}
               >
                 Logout
               </Button>
-
-            ) : (
-              <Link to="/login">
+			        </>	
+            )}
+            {!user && (
+                <Link to="/login">
                 <Button variant="outline-light" className="ms-2">
                   Login
                 </Button>
-              </Link>
-            )}
+                </Link>
+        )}
           </Nav>
         </Navbar.Collapse>
       </Container>

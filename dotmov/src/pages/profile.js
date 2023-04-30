@@ -8,12 +8,14 @@ import { auth } from '../configs/firebase.js'
 
 const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
 
-function Profile() {
+const Profile = () => {
+
   const userID = auth.currentUser.uid;
+  //const userID = 'hM8o7xpJiagp0oCaYBRsK1c6ITQ2';
 
   const [favoriteMovies, setFavoriteMovies] = useState([]);
   const [movies, setMovies] = useState([]);
-  const [removeSuccess, setRemoveSuccess] = useState(false); // Add state variable for removal success
+  const [removeSuccess, setRemoveSuccess] = useState(false);
 
   useEffect(() => {
     axios
@@ -24,7 +26,7 @@ function Profile() {
       .catch((error) => {
         console.error(error);
       });
-  }, [userID, removeSuccess]); // Include removeSuccess as a dependency
+  }, [userID, removeSuccess]);
 
   useEffect(() => {
     Promise.all(
@@ -48,7 +50,7 @@ function Profile() {
       .post("http://localhost:5678/RemoveFavorite", { userID, movieID })
       .then((response) => {
         console.log(response.data);
-        setRemoveSuccess(true); // Update state variable on successful removal
+        setRemoveSuccess(true);
       })
       .catch((error) => {
         console.error(error);
@@ -66,7 +68,7 @@ function Profile() {
               <MovieContainer2
                 key={movie.id}
                 {...movie}
-                handleRemoveFavorite={handleRemoveFavorite} // Pass handleRemoveFavorite as a prop
+                handleRemoveFavorite={handleRemoveFavorite}
               />
             ))}
           </div>

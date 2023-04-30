@@ -17,6 +17,7 @@ export const useAuth = () => { return useContext(userAuthContext)};
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState({});
   const [signupError, setSignUpError] = useState("");
+  const [userID, setUserID] = useState(null);
   // const navigate = useNavigate();
 
   function logIn(email, password) {
@@ -59,6 +60,11 @@ export function UserAuthContextProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      if (user) {
+        setUserID(user.uid);
+      } else {
+        setUserID(null);
+      }
     });
 
     return unsubscribe;
