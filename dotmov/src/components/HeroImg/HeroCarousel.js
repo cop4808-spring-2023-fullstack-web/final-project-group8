@@ -11,8 +11,7 @@ function HeroCarousel() {
 
 
   useEffect(() => {
-    axios
-      .get(
+    axios.get(
         `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
       )
       .then((response) => {
