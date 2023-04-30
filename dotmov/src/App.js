@@ -11,6 +11,7 @@ import Results from "./components/Search/results";
 import Favorites from "./pages/favorites.js";
 
 import ProtectedRoute from "./components/protectedRoutes";
+import PrivateRoutes from "./context/PrivateRoutes";
 import { UserAuthContextProvider } from "./context/UserAuthContext";
 
 const App = () => {
@@ -30,7 +31,9 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/details" element={<Details />} />
           <Route path="/results" element={<Results />} />
-          <Route path="/favorites" element={<Favorites />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/favorites" element={<Favorites />} />
+          </Route>
         </Routes>
       </Router>{" "}
       {/* Close Router component */}

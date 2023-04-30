@@ -5,6 +5,7 @@ import { useAuth } from "../context/UserAuthContext";
 import axios from "axios";
 import "../App.css";
 
+
 const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
 
 function NavigationBar({}) {
@@ -74,13 +75,7 @@ function NavigationBar({}) {
             </Nav.Link>
             {user && (
 			        <>
-                <Nav.Link href="/Favorites" style={{ color: "#FFFFFF" }}>
-                Favorites
-                </Nav.Link>
-			        </>	
-            )}
-            {user && (
-			        <>
+                <Nav.Link href="/Favorites" style={{ color: "#FFFFFF" }}>Favorites</Nav.Link>
                 <Button
                 variant="outline-light"
                 className="ms-2"
