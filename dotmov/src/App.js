@@ -7,6 +7,7 @@ import Login from "./components/login";
 import Signup from "./components/signup";
 import Home from "./pages/home";
 import Details from "./pages/details";
+import Results from "./components/Search/results";
 import Profile from "./pages/profile";
 
 import ProtectedRoute from "./components/protectedRoutes";
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/details" element={<Details />} />
+          <Route path="/results" element={<Results />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>{" "}

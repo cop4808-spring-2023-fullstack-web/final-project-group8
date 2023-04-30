@@ -27,9 +27,17 @@ var http = require("https");
 
 app.post('/AddUser', async (req, res) => {
   try{
-    const newUser = req.body;
-    const result = await collection.insertOne(newUser);
-    res.json({ UserID: result.insertedId });
+    const userCheck = req.body.user; //Inside user object of response
+    const userID = userCheck.firebaseUID; //get firebaseUID for Search
+    const userExist = await collection.findOne({ 'user.firebaseUID': userID});
+    if(!userExist){ //if User Exists Via FirebaseUID
+      const newUser = req.body; //Object waiting to be inserted to mongo
+      const result = await collection.insertOne(newUser); // User did not exist so we add.
+      res.json({ UserID: result.insertedId });
+    } else {
+      console.log('User with ID ${userID} already exists');
+      res.json({ message: 'User Already Exists in MongoDB' });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to Create User' });
@@ -74,6 +82,7 @@ app.post('/RemoveFavorite', async (req, res) => {
       throw new Error('Movie not found in favorites');
     }
     favoriteMovies.splice(movieIndex, 1);
+    favoriteMovies.splice(movieIndex, 1);
     await collection.updateOne(
       { 'user.firebaseUID': userID },
       { $set: { favoriteMovies } }
@@ -95,13 +104,43 @@ app.get('/FavoriteMovies/:userID', async (req, res) => {
     }
     const favoriteMovies = user.favoriteMovies || [];
     res.json({ favoriteMovies });
+    res.json({ message: 'Favorite movie removed successfully' });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: 'Failed to remove favorite movie' });
+  }
+});
+
+app.get('/FavoriteMovies/:userID', async (req, res) => {
+  try {
+    const userID = req.params.userID;
+    const user = await collection.findOne({ 'user.firebaseUID': userID });
+    console.dir(userID)
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const favoriteMovies = user.favoriteMovies || [];
+    res.json({ favoriteMovies });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to get favorite movies' });
     res.status(500).json({ error: 'Failed to get favorite movies' });
   }
 });
 
 
   
+
+app.get('/search', async (req, res) => {
+  const query = req.query.query;
+  try {
+    const response = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${query}`);
+    res.json({ movies: response.data.results });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
+})
+
 app.listen(5678); //start the server
 console.log('Server is running...');
