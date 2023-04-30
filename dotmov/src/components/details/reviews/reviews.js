@@ -51,7 +51,7 @@ function Reviews(props) {
         <div className="container-fluid" style={{ padding: "0" }}>
           <div className="row reviews" style={{ color: "white" }}>
             <div className="reviews">
-              <div class="overflow-auto p-3" style={{ maxHeight: "350px" }}>
+              <div class="overflow-auto p-3" style={{ maxHeight: "450px" }}>
                 {reviews.map((rew) => (
                   <div
                     className="container"
