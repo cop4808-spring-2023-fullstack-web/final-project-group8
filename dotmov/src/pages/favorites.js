@@ -21,15 +21,21 @@ const Favorites = () => {
   const [removeSuccess, setRemoveSuccess] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5678/FavoriteMovies/${userID}`)
-      .then((response) => {
-        setFavoriteMovies(response.data.favoriteMovies);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [userID, removeSuccess]);
+    if (removeSuccess === favoriteMovies.length) {
+      setMovies([]);
+      axios
+        .get(`http://localhost:5678/FavoriteMovies/${userID}`)
+        .then((response) => {
+          setFavoriteMovies(response.data.favoriteMovies);
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          setRemoveSuccess(0); // Reset removeSuccess after re-fetch
+        });
+    }
+  }, [userID, favoriteMovies.length, removeSuccess]);
 
   useEffect(() => {
     Promise.all(
@@ -53,12 +59,20 @@ const Favorites = () => {
       .post("http://localhost:5678/RemoveFavorite", { userID, movieID })
       .then((response) => {
         console.log(response.data);
-        setRemoveSuccess(true);
+        setFavoriteMovies((prevMovies) =>
+          prevMovies.filter((id) => id !== movieID)
+        );
+        setRemoveSuccess((prevSuccess) => prevSuccess + 1);
       })
       .catch((error) => {
         console.error(error);
       });
   };
+
+  useEffect(() => {
+    setRemoveSuccess(0); // Reset removeSuccess on every re-fetch
+  }, [userID]);
+
 
   return (
     <>

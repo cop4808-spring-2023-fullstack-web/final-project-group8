@@ -10,6 +10,8 @@ const API_IMG ="https://image.tmdb.org/t/p/w500/";
 
 const MovieContainer = ({title, poster_path,vote_average, release_date, overview , id}) => {
   const [isFavoriteAdded, setIsFavoriteAdded] = useState(false);
+  const [addFavoriteError, setAddFavoriteError] = useState('');
+
 
   const sendFavorite = (event) => {
     const userID = auth.currentUser.uid;
@@ -18,6 +20,7 @@ const MovieContainer = ({title, poster_path,vote_average, release_date, overview
       .then(response => {
         console.log(response.data);
         setIsFavoriteAdded(true);
+        setAddFavoriteError('');
         const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         if (!favorites.includes(movieID)) {
           favorites.push(movieID);
@@ -28,6 +31,7 @@ const MovieContainer = ({title, poster_path,vote_average, release_date, overview
       .catch(error => {
         console.error(error);
         setIsFavoriteAdded(false);
+        setAddFavoriteError('Cannot be added');
       });
   }
 return(
@@ -56,7 +60,7 @@ return(
               id={id}
               onClick={sendFavorite}
             >
-                {isFavoriteAdded ? "Added" : "Add to favorites"}
+                {isFavoriteAdded  && !addFavoriteError ? "Added" : addFavoriteError || "Add to favorites"}
             </button>
       </div>
             </div>
