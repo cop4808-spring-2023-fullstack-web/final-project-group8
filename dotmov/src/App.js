@@ -8,7 +8,7 @@ import Signup from "./components/signup";
 import Home from "./pages/home";
 import Details from "./pages/details";
 import Results from "./components/Search/results";
-import Favorites from "./pages/favorites.js";
+import Favorites from "./pages/favorites";
 import Movies from "./pages/movies";
 
 import ProtectedRoute from "./components/protectedRoutes";

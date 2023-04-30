@@ -25,6 +25,13 @@ const collection = database.collection(config.db.collection)
 
 var http = require("https");
 
+/**
+ * A brief description of what the function does.
+ *
+ * @param {Type} paramName - Description of the parameter.
+ * @returns {Type} Description of the return value.
+ * @throws {Type} Description of the exception thrown.
+ */
 app.post('/AddUser', async (req, res) => {
   try{
     const userCheck = req.body.user; //Inside user object of response
@@ -44,6 +51,13 @@ app.post('/AddUser', async (req, res) => {
   }
 });
 
+/**
+ * A brief description of what the function does.
+ *
+ * @param {Type} paramName - Description of the parameter.
+ * @returns {Type} Description of the return value.
+ * @throws {Type} Description of the exception thrown.
+ */
 app.post('/AddFavorite', async (req, res) => {
   try {
     const userID = req.body.userID;
@@ -68,6 +82,13 @@ app.post('/AddFavorite', async (req, res) => {
   }
 });
 
+/**
+ * A brief description of what the function does.
+ *
+ * @param {Type} paramName - Description of the parameter.
+ * @returns {Type} Description of the return value.
+ * @throws {Type} Description of the exception thrown.
+ */
 app.post('/RemoveFavorite', async (req, res) => {
   try {
     const userID = req.body.userID;
@@ -93,10 +114,18 @@ app.post('/RemoveFavorite', async (req, res) => {
   }
 });
 
+/**
+ * A brief description of what the function does.
+ *
+ * @param {Type} paramName - Description of the parameter.
+ * @returns {Type} Description of the return value.
+ * @throws {Type} Description of the exception thrown.
+ */
 app.get('/FavoriteMovies/:userID', async (req, res) => {
   try {
     const userID = req.params.userID;
     const user = await collection.findOne({ 'user.firebaseUID': userID });
+    console.dir(userID)
     if (!user) {
       throw new Error('User not found');
     }
@@ -108,6 +137,13 @@ app.get('/FavoriteMovies/:userID', async (req, res) => {
   }
 });
 
+/**
+ * A brief description of what the function does.
+ *
+ * @param {Type} paramName - Description of the parameter.
+ * @returns {Type} Description of the return value.
+ * @throws {Type} Description of the exception thrown.
+ */
 app.get('/search', async (req, res) => {
   const query = req.query.query;
   try {
