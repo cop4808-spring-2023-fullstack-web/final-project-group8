@@ -147,6 +147,7 @@ function Details() {
 
               <div className="title">
                 <h1>Cast</h1>
+                <hr />
               </div>
               <Cast id={movieID} />
               <div className="title">
@@ -157,6 +158,7 @@ function Details() {
 
               <div className="title">
                 <h1>Might Also Like</h1>
+                <hr />
               </div>
               <MightLike id={movieID} />
             </div>

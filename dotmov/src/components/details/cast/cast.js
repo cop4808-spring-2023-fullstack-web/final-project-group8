@@ -5,19 +5,35 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import axios from "axios";
 import "../../details/details.css";
-// import "../cast/cast.css";
+import placeholderIm from "../cast/placeholder.png"
 
 //Cast
 import { render } from "react-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
+const CustomPrevArrow = ({ onClick }) => (
+  <button className="prev-arrow" onClick={onClick}>
+    <FaChevronLeft />
+  </button>
+);
+
+const CustomNextArrow = ({ onClick }) => (
+  <button className="next-arrow" onClick={onClick}>
+    <FaChevronRight />
+  </button>
+);
 
 const sliderSettings = {
-  slidesToShow: 3,
+  infinite: true,
+  slidesToShow: 4,
   slidesToScroll: 1,
-  infinite: false,
+  prevArrow: <CustomPrevArrow />,
   width: "150px",
+  rtl: true,
+  nextArrow: <CustomNextArrow />,
 };
 
 const BASE_API = axios.create({ baseURL: "https://api.themoviedb.org/3/" });
@@ -89,14 +105,15 @@ function Cast(props) {
         <div className="container-fluid" style={{ padding: "0" }}>
           <div className="row casts" style={{ color: "white" }}>
             <div className="cast">
-              <Slider {...sliderSettings}>
+              <Slider {...sliderSettings} arrow={true}>
                 {cast.map((card, index) => (
                   <div key={index}>
                     <img
                       alt={card.name}
-                      src={`https://image.tmdb.org/t/p/w200${card?.profile_path}`}
-                      width="150"
-                      height="150"
+                      src={card.profile_path ? `https://image.tmdb.org/t/p/w200${card.profile_path}` : placeholderIm}
+                      width="auto"
+                      height="auto"
+
                     />
                     <h6>{card.name}</h6>
                     {/* <p>{card.known_for_department}</p> */}

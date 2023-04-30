@@ -1,11 +1,14 @@
 .fade-img {
-  width: 100%;
-  height: 20%;
+  width: inherit;
+  height: 60vh;
   z-index: -1;
   opacity: 0.5;
 }
 
 .backdrop {
+  top:0;
+  left:0;
+  height:100%;
   position: relative;
   overflow: hidden;
 }
@@ -15,6 +18,7 @@
   position: relative;
   top: -10%;
   margin: 2%;
+  margin-top: -20%; /* to get overlapped with background*/
   overflow: hidden;
 }
 
@@ -46,8 +50,8 @@
 
 /* Cast */
 .title {
-  text-decoration: underline;
-  text-decoration-color: #38cdd7;
+  /* text-decoration: underline;
+  text-decoration-color: #38cdd7; */
   color: white;
   z-index: 0;
   margin-top: 3%;
@@ -59,16 +63,45 @@
 /* Cast */
 .cast .slick-slide {
   width: 190px !important;
+  margin-right: 20px;
 }
+
+.prev-arrow, .next-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  border: none;
+  color: white;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.prev-arrow {
+  left: 20px;
+  z-index: 2;
+}
+
+.next-arrow {
+  right: 20px;
+}
+
 
 /* Might Like */
 .mightlike .slick-slide {
   width: 270px !important;
+  margin-right: 15px !important;
 }
 
 .mightlike .slick-slide img {
   border: 1px solid #38cdd7;
-  height: 300px;
+  height: 400px;
 }
 
 .mightlike-button {

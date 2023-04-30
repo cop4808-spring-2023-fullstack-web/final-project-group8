@@ -2,22 +2,38 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import Footer from "../../footer/footer"
 
 import axios from "axios";
 import "../../details/details.css";
-//import "../mightlike/mightlike.css";
 
 //Might Also Like Movies
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
+const CustomPrevArrow = ({ onClick }) => (
+  <button className="prev-arrow" onClick={onClick}>
+    <FaChevronLeft />
+  </button>
+);
+
+const CustomNextArrow = ({ onClick }) => (
+  <button className="next-arrow" onClick={onClick}>
+    <FaChevronRight />
+  </button>
+);
 
 const sliderSettings = {
-  slidesToShow: 3,
+  infinite: true,
+  slidesToShow: 4,
   slidesToScroll: 1,
-  infinite: false,
+  prevArrow: <CustomPrevArrow />,
   width: "230px",
+  rtl: true,
+  nextArrow: <CustomNextArrow />,
 };
 
 const BASE_API = axios.create({ baseURL: "https://api.themoviedb.org/3/" });
@@ -70,16 +86,16 @@ function MightLike(props) {
       {cast.length > 0 && (
         <div className="container-fluid" style={{ padding: "0" }}>
           <div className="row casts" style={{ color: "white" }}>
-            <div className="mightlike">
+            <div className="mightlike" style={{marginBottom: "20px"}}>
               <Slider {...sliderSettings}>
                 {cast.map((card) => (
                   <Link key={card.id} to={`/details/${card.id}`}>
                     <div>
                       <img
                         alt={card.title}
-                        src={`https://image.tmdb.org/t/p/w500${card?.poster_path}`}
-                        width="250"
-                        height="250"
+                        src={`https://image.tmdb.org/t/p/w500${card?.poster_path}` || 'https://via.placeholder.com/500x750.png?text=No+Poster+Available'}
+                        width="auto"
+                        height="auto"
                       />
                     </div>
                   </Link>
@@ -89,6 +105,7 @@ function MightLike(props) {
           </div>
         </div>
       )}
+      < Footer/> 
     </>
   );
 }
