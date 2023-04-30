@@ -31,9 +31,8 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/details" element={<Details />} />
           <Route path="/results" element={<Results />} />
-          <Route element={<PrivateRoutes />}>
-            <Route path="/favorites" element={<Favorites />} />
-          </Route>
+          <Route path="/favorites" element={<Favorites />} />
+          
         </Routes>
       </Router>{" "}
       {/* Close Router component */}
