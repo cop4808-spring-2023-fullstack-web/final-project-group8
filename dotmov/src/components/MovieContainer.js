@@ -45,35 +45,23 @@ const MovieContainer = ({
         <Link to={`/details/${id}`}>
           <img className="card-img-top" src={API_IMG + poster_path} />
         </Link>
+
         <div className="card-body">
-          <img
-            className="card-img-top"
-            src={poster_path ? API_IMG + poster_path : placeholderImg}
-            alt={title}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = placeholderImg;
-            }}
-          />
-          <div className="card-body">
-            <h5 className="card-title">{title}</h5>
-            <div className={`rating ${vote_average >= 5 ? "green" : "red"}`}>
-              {" "}
-              Rating: {vote_average}
-            </div>
-            <div style={{ marginTop: "10px" }}>
-              <button
-                type="button"
-                className={`btn ${
-                  isFavoriteAdded ? "btn-success" : "btn-dark"
-                }`}
-                disabled={isFavoriteAdded}
-                id={id}
-                onClick={sendFavorite}
-              >
-                {isFavoriteAdded ? "Added" : "Add to favorites"}
-              </button>
-            </div>
+          <h5 className="card-title">{title}</h5>
+          <div className={`rating ${vote_average >= 5 ? "green" : "red"}`}>
+            {" "}
+            Rating: {vote_average}
+          </div>
+          <div style={{ marginTop: "10px" }}>
+            <button
+              type="button"
+              className={`btn ${isFavoriteAdded ? "btn-success" : "btn-dark"}`}
+              disabled={isFavoriteAdded}
+              id={id}
+              onClick={sendFavorite}
+            >
+              {isFavoriteAdded ? "Added" : "Add to favorites"}
+            </button>
           </div>
         </div>
       </div>
