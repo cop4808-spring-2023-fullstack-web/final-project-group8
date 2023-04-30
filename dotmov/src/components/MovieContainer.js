@@ -19,9 +19,17 @@ const MovieContainer = ({
 }) => {
   const [isFavoriteAdded, setIsFavoriteAdded] = useState(false);
   const [addFavoriteError, setAddFavoriteError] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
 
   const sendFavorite = (event) => {
+
+    const user = auth.currentUser;
+    if (!user) {
+      setShowPopup(true);
+      return;
+    }
+
     const userID = auth.currentUser.uid;
     const movieID = event.target.id;
     axios
@@ -44,6 +52,16 @@ const MovieContainer = ({
       });
   };
   return (
+    <>
+    {showPopup && (
+        <div className="popup">
+          <div className="popup-content text-center">
+            <p style={{fontSize:"25px"}}>Please login or create an account to add to favorites.</p>
+            <button style={{backgroundColor:"#38cdd7", color:"white", padding:"2%", borderRadius:"25%"}} onClick={() => setShowPopup(false)}>Close</button>
+          </div>
+        </div>
+      )}
+    
     <div className="card text-center singleMovie mb-3">
       <div className="card-body">
         <Link to={`/details/${id}`}>
@@ -70,6 +88,8 @@ const MovieContainer = ({
         </div>
       </div>
     </div>
+
+    </>
   );
 };
 
