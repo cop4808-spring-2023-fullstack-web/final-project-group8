@@ -27,9 +27,17 @@ var http = require("https");
 
 app.post('/AddUser', async (req, res) => {
   try{
-    const newUser = req.body;
-    const result = await collection.insertOne(newUser);
-    res.json({ UserID: result.insertedId });
+    const userCheck = req.body.user; //Inside user object of response
+    const userID = userCheck.firebaseUID; //get firebaseUID for Search
+    const userExist = await collection.findOne({ 'user.firebaseUID': userID});
+    if(!userExist){ //if User Exists Via FirebaseUID
+      const newUser = req.body; //Object waiting to be inserted to mongo
+      const result = await collection.insertOne(newUser); // User did not exist so we add.
+      res.json({ UserID: result.insertedId });
+    } else {
+      console.log('User with ID ${userID} already exists');
+      res.json({ message: 'User Already Exists in MongoDB' });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to Create User' });

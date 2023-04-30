@@ -10,7 +10,11 @@ import { auth } from '../configs/firebase.js'
 const createUser = async (user, favoriteMovies = []) => {
   try {
     const userID = auth.currentUser.uid;
+    const userEmail = auth.currentUser.email;
+    const userName = auth.currentUser.displayName;
     user.firebaseUID = userID;
+    user.fullName = userName;
+    user.email = userEmail;
     const response = await axios.post('http://localhost:5678/AddUser', {
       user,
       favoriteMovies,
@@ -29,6 +33,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  //const [displayname, setDisplayName] = useState("");
   const { logIn, googleSignIn } = useAuth();
   const navigate = useNavigate();
 
@@ -47,6 +52,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await googleSignIn();
+      await createUser({}); // Add DisplayName
       navigate("/");
     } catch (error) {
       console.log(error.message);
