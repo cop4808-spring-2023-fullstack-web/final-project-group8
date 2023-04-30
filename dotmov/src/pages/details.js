@@ -164,11 +164,9 @@ function Details() {
         </div>
       </div>
 
-      {/* Cast
-
-      <div>
+      {/* <div>
         <Footer />
-      </div> */}
+      </div>  */}
     </>
   );
 }
