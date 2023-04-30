@@ -17,7 +17,6 @@ export const useAuth = () => { return useContext(userAuthContext)};
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState({});
   const [signupError, setSignUpError] = useState("");
-  const [userID, setUserID] = useState(null);
   // const navigate = useNavigate();
 
   function logIn(email, password) {
@@ -61,14 +60,18 @@ export function UserAuthContextProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       if (user) {
-        setUserID(user.uid);
-      } else {
-        setUserID(null);
-      }
+          localStorage.setItem("user", JSON.stringify(user));
+    } else {
+          localStorage.removeItem("user");
+    }
     });
-
+    //Check local storage for user data
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
     return unsubscribe;
-  }, []);
+    }, []);
   
 
   return (

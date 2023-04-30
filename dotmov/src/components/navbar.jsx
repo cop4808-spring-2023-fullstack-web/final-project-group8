@@ -43,14 +43,14 @@ function NavigationBar({}) {
   return (
     <Navbar bg="dark" expand="lg" style={{ zIndex: 2 }}>
       <Container fluid>
-        <Navbar.Brand href="/" style={{ color: "#38CDD7" }}>
+        <Navbar.Brand href="/" style={{ color: "#38CDD7", marginLeft: '15px' }}>
           dotMOV
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
-            className="me-auto ms-auto my-2 my-lg-0"
-            style={{ maxHeight: "100px" }}
+            className="ms-auto my-2 my-lg-0"
+            style={{ maxHeight: "100px", marginRight: '30px'}}
             navbarScroll
           >
             <Form className="mx-auto d-flex">
@@ -75,13 +75,10 @@ function NavigationBar({}) {
             <Nav.Link href="/" style={{ color: "#FFFFFF" }}>
               All Movies
             </Nav.Link>
-            <Nav.Link href="#action2" style={{ color: "#FFFFFF" }}>
-              TV Shows
-            </Nav.Link>
             {user && (
 			        <>
-                <Nav.Link href="/profile" style={{ color: "#FFFFFF" }}>
-                Profile
+                <Nav.Link href="/Favorites" style={{ color: "#FFFFFF" }}>
+                Favorites
                 </Nav.Link>
 			        </>	
             )}

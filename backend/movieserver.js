@@ -82,7 +82,6 @@ app.post('/RemoveFavorite', async (req, res) => {
       throw new Error('Movie not found in favorites');
     }
     favoriteMovies.splice(movieIndex, 1);
-    favoriteMovies.splice(movieIndex, 1);
     await collection.updateOne(
       { 'user.firebaseUID': userID },
       { $set: { favoriteMovies } }
@@ -98,24 +97,6 @@ app.get('/FavoriteMovies/:userID', async (req, res) => {
   try {
     const userID = req.params.userID;
     const user = await collection.findOne({ 'user.firebaseUID': userID });
-    console.dir(userID)
-    if (!user) {
-      throw new Error('User not found');
-    }
-    const favoriteMovies = user.favoriteMovies || [];
-    res.json({ favoriteMovies });
-    res.json({ message: 'Favorite movie removed successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to remove favorite movie' });
-  }
-});
-
-app.get('/FavoriteMovies/:userID', async (req, res) => {
-  try {
-    const userID = req.params.userID;
-    const user = await collection.findOne({ 'user.firebaseUID': userID });
-    console.dir(userID)
     if (!user) {
       throw new Error('User not found');
     }
@@ -124,12 +105,8 @@ app.get('/FavoriteMovies/:userID', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to get favorite movies' });
-    res.status(500).json({ error: 'Failed to get favorite movies' });
   }
 });
-
-
-  
 
 app.get('/search', async (req, res) => {
   const query = req.query.query;

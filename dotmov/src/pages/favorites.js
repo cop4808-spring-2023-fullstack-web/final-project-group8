@@ -8,10 +8,13 @@ import { auth } from '../configs/firebase.js'
 
 const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
 
-const Profile = () => {
+const Favorites = () => {
 
-  const userID = auth.currentUser.uid;
-  //const userID = 'hM8o7xpJiagp0oCaYBRsK1c6ITQ2';
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const userID = userData ? userData.uid : null;
+
+  //const userID = auth.currentUser.uid;
+  //const userID = 'ShvNeVT1f2hI9GAF9GKjaZAlcjm1';
 
   const [favoriteMovies, setFavoriteMovies] = useState([]);
   const [movies, setMovies] = useState([]);
@@ -62,18 +65,20 @@ const Profile = () => {
       <div className="moviesContainer">
         <h1>Your Favorites</h1>
         <hr />
-        <div>
-          <div className="moviesGrid">
-            {movies.map((movie) => (
-              <MovieContainer2
-                key={movie.id}
-                {...movie}
-                handleRemoveFavorite={handleRemoveFavorite}
-              />
-            ))}
-          </div>
+        {movies.length > 0 ? (
+        <div className="moviesGrid">
+          {movies.map((movie) => (
+            <MovieContainer2
+              key={movie.id}
+              {...movie}
+              handleRemoveFavorite={handleRemoveFavorite}
+            />
+          ))}
         </div>
-      </div>
+      ) : (
+        <p className="text-center mt-5 display-6">No favorites to display</p>
+      )}
+    </div>
       <div>
         <Footer />
       </div>
@@ -81,4 +86,4 @@ const Profile = () => {
   );
 }
 
-export default Profile;
+export default Favorites;
