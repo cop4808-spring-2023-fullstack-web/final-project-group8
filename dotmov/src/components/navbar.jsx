@@ -72,7 +72,7 @@ function NavigationBar({}) {
               </Button> */}
             </Form>
 
-            <Nav.Link href="/" style={{ color: "#FFFFFF" }}>
+            <Nav.Link href="/movies" style={{ color: "#FFFFFF" }}>
               All Movies
             </Nav.Link>
             <Nav.Link href="#action2" style={{ color: "#FFFFFF" }}>
