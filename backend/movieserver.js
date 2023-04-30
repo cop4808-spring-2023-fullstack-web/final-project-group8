@@ -97,7 +97,6 @@ app.get('/FavoriteMovies/:userID', async (req, res) => {
   try {
     const userID = req.params.userID;
     const user = await collection.findOne({ 'user.firebaseUID': userID });
-    console.dir(userID)
     if (!user) {
       throw new Error('User not found');
     }

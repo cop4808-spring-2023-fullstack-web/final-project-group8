@@ -8,12 +8,17 @@ import { auth } from '../configs/firebase.js'
 
 const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
 
-function Profile() {
-  const userID = auth.currentUser.uid;
+const Favorites = () => {
+
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const userID = userData ? userData.uid : null;
+
+  //const userID = auth.currentUser.uid;
+  //const userID = 'ShvNeVT1f2hI9GAF9GKjaZAlcjm1';
 
   const [favoriteMovies, setFavoriteMovies] = useState([]);
   const [movies, setMovies] = useState([]);
-  const [removeSuccess, setRemoveSuccess] = useState(false); // Add state variable for removal success
+  const [removeSuccess, setRemoveSuccess] = useState(false);
 
   useEffect(() => {
     axios
@@ -24,7 +29,7 @@ function Profile() {
       .catch((error) => {
         console.error(error);
       });
-  }, [userID, removeSuccess]); // Include removeSuccess as a dependency
+  }, [userID, removeSuccess]);
 
   useEffect(() => {
     Promise.all(
@@ -48,7 +53,7 @@ function Profile() {
       .post("http://localhost:5678/RemoveFavorite", { userID, movieID })
       .then((response) => {
         console.log(response.data);
-        setRemoveSuccess(true); // Update state variable on successful removal
+        setRemoveSuccess(true);
       })
       .catch((error) => {
         console.error(error);
@@ -60,18 +65,20 @@ function Profile() {
       <div className="moviesContainer">
         <h1>Your Favorites</h1>
         <hr />
-        <div>
-          <div className="moviesGrid">
-            {movies.map((movie) => (
-              <MovieContainer2
-                key={movie.id}
-                {...movie}
-                handleRemoveFavorite={handleRemoveFavorite} // Pass handleRemoveFavorite as a prop
-              />
-            ))}
-          </div>
+        {movies.length > 0 ? (
+        <div className="moviesGrid">
+          {movies.map((movie) => (
+            <MovieContainer2
+              key={movie.id}
+              {...movie}
+              handleRemoveFavorite={handleRemoveFavorite}
+            />
+          ))}
         </div>
-      </div>
+      ) : (
+        <p className="text-center mt-5 display-6">No favorites to display</p>
+      )}
+    </div>
       <div>
         <Footer />
       </div>
@@ -79,4 +86,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Favorites;

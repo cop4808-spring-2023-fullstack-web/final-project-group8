@@ -60,19 +60,18 @@ export function UserAuthContextProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
-      } else {
-        localStorage.removeItem("user");
-      }
+          localStorage.setItem("user", JSON.stringify(user));
+    } else {
+          localStorage.removeItem("user");
+    }
     });
-    // Check local storage for user data
+    //Check local storage for user data
     const userData = localStorage.getItem("user");
     if (userData) {
       setUser(JSON.parse(userData));
     }
-
     return unsubscribe;
-  }, []);
+    }, []);
   
 
   return (
