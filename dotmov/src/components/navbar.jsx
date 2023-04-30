@@ -14,14 +14,11 @@ function NavigationBar({}) {
 
   const handleLogout = async () => {
     try {
-      let loggedOut = await logOut();
-      if (loggedOut === true) {
-        navigate("/");
-      } else {
-        throw loggedOut;
-      }
+      await logOut();
+      console.log("user successfully logged out");
+      navigate("/");
     } catch (error) {
-      throw new Error("Failed to log out");
+      console.error("Failed to log out:", error.message);
     }
   };
 
