@@ -27,12 +27,7 @@ const BASE_AXIOS = axios.create({
 const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
 //API
 const API_BASE_URL = "https://api.themoviedb.org/3/movie/";
-
-//Backdrop img_url + poster_url
-//example of poster img_url = https://image.tmdb.org/t/p/w500/3i3fleqzeZ33A1mHci9gR9rQINd.jpg
 const base_img_url = "https://image.tmdb.org/t/p/w500";
-//Backdrop img_url + backdrop_url
-//emaple of backdrop https://image.tmdb.org/t/p/w500/feU1DWV5zMWxXUHJyAIk3dHRQ9c.jpg
 
 function Cast(props) {
   //Get movie id from button

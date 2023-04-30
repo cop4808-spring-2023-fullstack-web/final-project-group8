@@ -36,7 +36,7 @@ const base_img_url = "https://image.tmdb.org/t/p/w500";
 
 function MightLike(props) {
   //Get movie id from button
-  const movieID = props.id;
+  const id = props.id;
 
   //set movie
   const [cast, setCast] = useState([]);
@@ -47,14 +47,13 @@ function MightLike(props) {
     BASE_AXIOS.get(`${API_BASE_URL}${id}/recommendations?api_key=${API_KEY}`)
 
       .then((response) => {
-        // var d = response.data.cast.slice(0, 5);
         var d = response.data.results;
-        console.log("DATA: ", d);
+        // console.log("DATA: ", d);
 
         var cast = JSON.parse(JSON.stringify(d));
 
         cast.forEach(function (item, index) {
-          console.log("DATA JSON: ", item);
+          // console.log("DATA JSON: ", item);
           credits.push(item);
         });
 
@@ -63,8 +62,8 @@ function MightLike(props) {
       .catch((err) => console.log(err));
   }
   useEffect(() => {
-    fetchCast(movieID);
-  }, []);
+    fetchCast(id);
+  }, [id]);
 
   return (
     <>
@@ -73,10 +72,9 @@ function MightLike(props) {
           <div className="row casts" style={{ color: "white" }}>
             <div className="mightlike">
               <Slider {...sliderSettings}>
-                {cast.map((card, index) => (
-                  <Link to={`/details/${card.id}`}>
-                    {/* <button className="mightlike-button"> */}
-                    <div key={index}>
+                {cast.map((card) => (
+                  <Link key={card.id} to={`/details/${card.id}`}>
+                    <div>
                       <img
                         alt={card.title}
                         src={`https://image.tmdb.org/t/p/w500${card?.poster_path}`}
@@ -84,7 +82,6 @@ function MightLike(props) {
                         height="250"
                       />
                     </div>
-                    {/* </button> */}
                   </Link>
                 ))}
               </Slider>
