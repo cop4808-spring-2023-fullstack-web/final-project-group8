@@ -16,13 +16,13 @@ Our movie application, called dotMOV, uses The Movie DB API to provide users wit
 
     Login/Signup:
     <img src="./img/login.png">
-    <img src="./img/signup.png">
+    <img src="./img/register.png">
 
     Favorites:
-    <img src="./img/favorites">
+    <img src="./img/favorites.png">
 
     Search:
-    <img src="./img/search">
+    <img src="./img/search.png">
 
     GIF of dotMOV
     <img src="./img/dotMOV.gif">
