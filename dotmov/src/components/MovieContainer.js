@@ -39,7 +39,7 @@ const MovieContainer = ({
     const userID = auth.currentUser.uid;
     const movieID = event.target.id;
     axios
-      .post("http://localhost:5678/AddFavorite", { userID, movieID })
+      .post("https://movieserver.herokuapp.com/AddFavorite", { userID, movieID })
       .then((response) => {
         console.log(response.data);
         setIsFavoriteAdded(true);

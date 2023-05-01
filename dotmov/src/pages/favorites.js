@@ -24,7 +24,7 @@ const Favorites = () => {
     if (removeSuccess === favoriteMovies.length) {
       setMovies([]);
       axios
-        .get(`http://localhost:5678/FavoriteMovies/${userID}`)
+        .get(`https://movieserver.herokuapp.com/FavoriteMovies/${userID}`)
         .then((response) => {
           setFavoriteMovies(response.data.favoriteMovies);
         })
@@ -56,7 +56,7 @@ const Favorites = () => {
 
   const handleRemoveFavorite = (movieID) => {
     axios
-      .post("http://localhost:5678/RemoveFavorite", { userID, movieID })
+      .post("https://movieserver.herokuapp.com/RemoveFavorite", { userID, movieID })
       .then((response) => {
         console.log(response.data);
         setFavoriteMovies((prevMovies) =>

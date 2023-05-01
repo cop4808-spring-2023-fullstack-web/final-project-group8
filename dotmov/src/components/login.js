@@ -22,7 +22,7 @@ const createUser = async (user, favoriteMovies = []) => {
     user.firebaseUID = userID;
     user.fullName = userName;
     user.email = userEmail;
-    const response = await axios.post('http://localhost:5678/AddUser', {
+    const response = await axios.post('https://movieserver.herokuapp.com/AddUser', {
       user,
       favoriteMovies,
     });

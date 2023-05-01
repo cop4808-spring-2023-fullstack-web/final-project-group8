@@ -267,6 +267,6 @@ app.get('/search', async (req, res) => {
     res.status(500).send('Server Error');
   }
 })
-const port = config.server.port;
+const port = process.env.SERVER_PORT || 5678;
 app.listen(port); //start the server
 console.log('Server is running...');
