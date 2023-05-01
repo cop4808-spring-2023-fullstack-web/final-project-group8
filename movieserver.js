@@ -17,10 +17,10 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 
-//app.use(express.static(path.join(__dirname,'..', 'build')));
+app.use(express.static(path.join(__dirname, 'build')));
 app.use(express.static('public'));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
+  res.sendFile(path.join(__dirname,'build', 'public', 'index.html'));
 });
 
 const MongoClient = require('mongodb').MongoClient;
