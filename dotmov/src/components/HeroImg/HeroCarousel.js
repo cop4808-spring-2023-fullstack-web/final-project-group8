@@ -4,7 +4,7 @@ import { Carousel, Container, Row, Col, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './HeroCarousel.css'
 
-const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 function HeroCarousel() {
   const [trendingMovies, setTrendingMovies] = useState([]);

@@ -40,7 +40,7 @@ function Footer() {
               </a>
             </div>
             <div className="col-lg-6 text-center text-lg-end">
-              <a href="/" className="text-white mb-0 py-2">
+              <a href="/movies" className="text-white mb-0 py-2">
                 All Movies
               </a>
               <span className="mb-0 py-2 px-3" style={{ borderRight: "none" }}>
