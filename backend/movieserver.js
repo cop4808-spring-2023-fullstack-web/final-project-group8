@@ -1,15 +1,10 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const axios = require('axios');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const router = express.Router();
-
-// Import the Swagger middleware
-const swaggerMiddleware = require('./swagger');
-
-// Use the Swagger middleware
-swaggerMiddleware(app);
 
 const corsOptions ={
   origin:'http://localhost:3000',
@@ -21,7 +16,11 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.static('./public'));
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 const MongoClient = require('mongodb').MongoClient;
 
@@ -268,6 +267,6 @@ app.get('/search', async (req, res) => {
     res.status(500).send('Server Error');
   }
 })
-
-app.listen(5678); //start the server
+const port = config.server.port;
+app.listen(port); //start the server
 console.log('Server is running...');
