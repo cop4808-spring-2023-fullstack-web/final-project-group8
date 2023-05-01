@@ -152,7 +152,7 @@ function Movies() {
 
         <div id='tags'></div>
         <div className='moviesContainer' > 
-        <h1> Popular Movies </h1>
+        <h1> Discover Movies </h1>
         <hr></hr>
          <div>
             <div className='moviesGrid'>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,6 +7,7 @@ import Footer from "../components/footer/footer";
 
 import axios from "axios";
 import "../components/details/details.css";
+import { auth } from "../configs/firebase";
 
 //Rating
 import Rating from "@mui/material/Rating";
@@ -92,6 +94,35 @@ function Details() {
     window.scrollTo(0, 0);
   }, [movieID]);
 
+  const [isFavoriteAdded, setIsFavoriteAdded] = useState(false);
+  const [addFavoriteError, setAddFavoriteError] = useState('');
+  const isLoggedIn = !!auth.currentUser;
+
+
+  const sendFavorite = (event) => {
+    const userID = auth.currentUser.uid;
+    const movieID = event.target.id;
+    axios
+      .post("http://localhost:5678/AddFavorite", { userID, movieID })
+      .then((response) => {
+        console.log(response.data);
+        setIsFavoriteAdded(true);
+        setAddFavoriteError('');
+        const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        if (!favorites.includes(movieID)) {
+          favorites.push(movieID);
+          localStorage.setItem("favorites", JSON.stringify(favorites));
+        }
+        //axios.put()
+      })
+      .catch((error) => {
+        console.error(error);
+        setIsFavoriteAdded(false);
+        setAddFavoriteError('Cannot be added');
+      });
+
+  }
+
   return (
     <>
       <div class="container-fluid" style={{ padding: "0" }}>
@@ -142,11 +173,31 @@ function Details() {
                       max={11}
                     />
                   </Box>
+
+                  {/*Add to Favorites*/}
+                  <div style={{ marginTop: "10px" }}>
+                  {isLoggedIn ? (
+              <button
+                type="button"
+                className={`btn ${isFavoriteAdded ? "btn-success" : "btn-dark"}`}
+                disabled={isFavoriteAdded}
+                id={id}
+                onClick={sendFavorite}
+              >
+                {isFavoriteAdded && !addFavoriteError ? "Added" : addFavoriteError || "Add to favorites"}
+              </button>
+            ) : (
+              <Link to="/login" className="btn btn-primary">
+                Log in to add to favorites
+              </Link>
+            )}
+          </div>
                 </div>
               </div>
 
               <div className="title">
                 <h1>Cast</h1>
+                <hr />
               </div>
               <Cast id={movieID} />
               <div className="title">
@@ -157,6 +208,7 @@ function Details() {
 
               <div className="title">
                 <h1>Might Also Like</h1>
+                <hr />
               </div>
               <MightLike id={movieID} />
             </div>
