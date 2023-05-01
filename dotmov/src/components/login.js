@@ -7,6 +7,13 @@ import GoogleButton from "react-google-button";
 import { useAuth } from "../context/UserAuthContext";
 import { auth } from '../configs/firebase.js'
 
+/**
+ * A brief description of what the function does.
+ *
+ * @param {Type} paramName - Description of the parameter.
+ * @returns {Type} Description of the return value.
+ * @throws {Type} Description of the exception thrown.
+ */
 const createUser = async (user, favoriteMovies = []) => {
   try {
     const userID = auth.currentUser.uid;
