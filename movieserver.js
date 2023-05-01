@@ -17,10 +17,10 @@ port = process.env.PORT || 5678;
 var listener = app.listen(port); //start the server
 console.log('Server is running...');
 
-app.use(express.static(path.join(__dirname, 'build')));
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+//app.use(express.static(path.join(__dirname, 'build')));
+//app.get('/', (req, res) => {
+//  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+//});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
