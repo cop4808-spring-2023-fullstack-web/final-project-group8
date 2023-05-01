@@ -5,12 +5,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const router = express.Router();
 
-// Import the Swagger middleware
-const swaggerMiddleware = require('./swagger');
-
-// Use the Swagger middleware
-swaggerMiddleware(app);
-
 const corsOptions ={
   origin:'http://localhost:3000',
   credentials:true,
