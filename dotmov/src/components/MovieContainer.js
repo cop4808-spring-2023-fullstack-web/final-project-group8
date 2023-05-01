@@ -21,7 +21,13 @@ const MovieContainer = ({
   const [addFavoriteError, setAddFavoriteError] = useState('');
   const [showPopup, setShowPopup] = useState(false);
 
-
+  /**
+ * A brief description of what the function does.
+ *
+ * @param {Type} paramName - Description of the parameter.
+ * @returns {Type} Description of the return value.
+ * @throws {Type} Description of the exception thrown.
+ */
   const sendFavorite = (event) => {
 
     const user = auth.currentUser;
