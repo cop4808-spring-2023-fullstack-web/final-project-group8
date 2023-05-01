@@ -30,7 +30,7 @@ const BASE_API = axios.create({ baseURL: "https://api.themoviedb.org/3/" });
 const BASE_AXIOS = axios.create({
   baseURL: "https://api.themoviedb.org/3%22%7D",
 });
-const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
+const API_KEY = process.env.REACT_APP_API_KEY;
 //API
 const API_BASE_URL = "https://api.themoviedb.org/3/movie/";
 

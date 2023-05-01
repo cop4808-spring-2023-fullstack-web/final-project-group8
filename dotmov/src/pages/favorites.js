@@ -6,7 +6,7 @@ import axios from 'axios';
 import firebase from '../configs/firebase.js'
 import { auth } from '../configs/firebase.js'
 
-const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 const Favorites = () => {
 
