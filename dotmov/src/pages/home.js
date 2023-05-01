@@ -6,11 +6,19 @@ import Footer from "../components/footer/footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
-const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
+const apikey = process.env.REACT_APP_API_KEY;
+
+/**
+ * A brief description of what the function does.
+ *
+ * @param {Type} paramName - Description of the parameter.
+ * @returns {Type} Description of the return value.
+ * @throws {Type} Description of the exception thrown.
+ */
 
 function Home() {
     const [movies, setMovies] = useState([]);
-    const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`;
+    const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${apikey}`;
 
     useEffect(() => {
         fetch(API_URL)

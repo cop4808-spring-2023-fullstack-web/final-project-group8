@@ -6,7 +6,7 @@ import Footer from "../components/footer/footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
-const API_KEY = "0d79c1ebca70c86b4e15ffd60aaf695f";
+const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3';
 const API_URL = BASE_URL + '/discover/movie?sort_by=popularity.desc&api_key='+API_KEY;
 const genres = [
@@ -87,8 +87,14 @@ const genres = [
       "name": "Western"
     }
   ]
-//setGenre()
 
+/**
+ * A brief description of what the function does.
+ *
+ * @param {Type} paramName - Description of the parameter.
+ * @returns {Type} Description of the return value.
+ * @throws {Type} Description of the exception thrown.
+ */
 function Movies() {
     const [movies, setMovies] = useState([]);
     const [selectedGenre, setselectedgenre] = useState([]);
