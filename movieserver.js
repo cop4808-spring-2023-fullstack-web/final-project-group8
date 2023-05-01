@@ -16,10 +16,10 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.static(path.join(__dirname,'final-project-mrashid2019', 'dotmov','build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname,'final-project-mrashid2019', 'dotmov','build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 const MongoClient = require('mongodb').MongoClient;
@@ -268,5 +268,5 @@ app.get('/search', async (req, res) => {
   }
 })
 const port = process.env.PORT || 5678;
-app.listen(port); //start the server
+app.listen(5678); //start the server
 console.log('Server is running...');
