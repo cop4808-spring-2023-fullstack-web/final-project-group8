@@ -268,5 +268,5 @@ app.get('/search', async (req, res) => {
   }
 })
 const port = process.env.PORT || 5678;
-app.listen(5678); //start the server
+app.listen(port); //start the server
 console.log('Server is running...');
