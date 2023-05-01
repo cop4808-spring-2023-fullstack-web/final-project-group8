@@ -12,6 +12,11 @@ const corsOptions ={
   optionSuccessStatus:200
 }
 app.use(cors(corsOptions));
+
+port = process.env.PORT || 5678;
+var listener = app.listen(port); //start the server
+console.log('Server is running...');
+
 app.use(express.static(path.join(__dirname, 'build')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
@@ -267,6 +272,5 @@ app.get('/search', async (req, res) => {
     res.status(500).send('Server Error');
   }
 })
-port = process.env.PORT || 5678;
-var listener = app.listen(port); //start the server
-console.log('Server is running...');
+app.listen(5678);
+console.log('Server Up...')
