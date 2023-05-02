@@ -3,7 +3,7 @@
 Movie Web Application using TheMovieDB API
 
 ## Demo Link
-Demo of the application: <br>
+Demo of the application: https://youtu.be/YwNvOpXpaIo <br>
 Access the final version of the app here: https://movieserver.herokuapp.com/
 
 ## Table of Content:
