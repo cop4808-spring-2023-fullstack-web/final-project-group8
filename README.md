@@ -38,7 +38,7 @@ Our movie application, called dotMOV, uses The Movie DB API to provide users wit
   - The Movie Database
   
 - Setup 
-   <br> To set up dotMOV in your local machine here are the following steps:<br>
+   <br> To set up dotMOV in your local machine, here are the following steps:<br>
     1. Clone the GitHub repository to your local machine 
     2. Navigate to the cloned directory by running the following command in your terminal
     3. Create .env file 
