@@ -50,8 +50,6 @@ Our movie application, called dotMOV, uses The Movie DB API to provide users wit
 
 - Current Status <br>
     Currently, our application is serving its purpose and we were able to complete all the requirements we set for ourselves. Some extra features we had in mind such as adding a profile section which would display the user favorites as well as allow user to change their personal information was not developed due to time constraints. 
-
-- Credits
     
 
 - Members 
